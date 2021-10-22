@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/realSoftProjectFirebase/static/css/main.5720738d.chunk.css",
+    "main.js": "/realSoftProjectFirebase/static/js/main.d71c7505.chunk.js",
+    "main.js.map": "/realSoftProjectFirebase/static/js/main.d71c7505.chunk.js.map",
+    "runtime-main.js": "/realSoftProjectFirebase/static/js/runtime-main.5139c801.js",
+    "runtime-main.js.map": "/realSoftProjectFirebase/static/js/runtime-main.5139c801.js.map",
+    "static/css/2.5cc265e8.chunk.css": "/realSoftProjectFirebase/static/css/2.5cc265e8.chunk.css",
+    "static/js/2.7d800a19.chunk.js": "/realSoftProjectFirebase/static/js/2.7d800a19.chunk.js",
+    "static/js/2.7d800a19.chunk.js.map": "/realSoftProjectFirebase/static/js/2.7d800a19.chunk.js.map",
+    "index.html": "/realSoftProjectFirebase/index.html",
+    "precache-manifest.039f4b620a008dbb0101522e8617ab9a.js": "/realSoftProjectFirebase/precache-manifest.039f4b620a008dbb0101522e8617ab9a.js",
+    "service-worker.js": "/realSoftProjectFirebase/service-worker.js",
+    "static/css/2.5cc265e8.chunk.css.map": "/realSoftProjectFirebase/static/css/2.5cc265e8.chunk.css.map",
+    "static/css/main.5720738d.chunk.css.map": "/realSoftProjectFirebase/static/css/main.5720738d.chunk.css.map",
+    "static/js/2.7d800a19.chunk.js.LICENSE.txt": "/realSoftProjectFirebase/static/js/2.7d800a19.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5139c801.js",
+    "static/css/2.5cc265e8.chunk.css",
+    "static/js/2.7d800a19.chunk.js",
+    "static/css/main.5720738d.chunk.css",
+    "static/js/main.d71c7505.chunk.js"
+  ]
+}
