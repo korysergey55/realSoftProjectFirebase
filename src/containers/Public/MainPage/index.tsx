@@ -1,8 +1,11 @@
 import * as React from 'react'
+import styles from './styles.module.scss'
+import Header from 'components/Header'
+
 const MainPage = () => {
   return (
     <>
-      <h2>MainPage</h2>
+      <Header />
     </>
   )
 }

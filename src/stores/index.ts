@@ -1,10 +1,11 @@
 import { createContext, useContext } from 'react'
 import { configure, observable } from 'mobx'
+import authAPI from './authAPI'
 
 configure({ enforceActions: 'observed' })
 
 class RootStore {
-  // @observable usersStore = usersStore
+  @observable authAPI = authAPI
 }
 
 const rootStore = new RootStore()

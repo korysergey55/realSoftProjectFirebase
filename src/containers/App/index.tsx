@@ -3,24 +3,20 @@ import { Router, Switch, Route } from 'react-router'
 import { Provider } from 'mobx-react'
 import history from 'utils/history'
 import AppLoading from 'components/AppLoading'
-import Admin from '../Admin'
 import store from 'stores'
+import MainPage from 'containers/Public/MainPage'
 
 class App extends Component {
-  state = {
-    initialized: false,
-  }
-
   render = (): JSX.Element => {
     return (
       <Provider {...store}>
-        {this.state.initialized ? (
-          <Router history={history}>
-            <Switch>{/* <Route path="/" component={Public} /> */}</Switch>
-          </Router>
-        ) : (
-          <AppLoading />
-        )}
+        <Router history={history}>
+          <Switch>
+            <Route exact path="/" component={MainPage} />
+            {/* <Route path="/" component={MainPage} /> */}
+          </Switch>
+        </Router>
+        {/* <AppLoading /> */}
       </Provider>
     )
   }
