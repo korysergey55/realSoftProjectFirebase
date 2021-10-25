@@ -5,6 +5,7 @@ import history from 'utils/history'
 import AppLoading from 'components/AppLoading'
 import store from 'stores'
 import MainPage from 'containers/Public/MainPage'
+import SaunterPage from 'containers/Public/SaunterPage'
 
 class App extends Component {
   render = (): JSX.Element => {
@@ -13,7 +14,7 @@ class App extends Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={MainPage} />
-            {/* <Route path="/" component={MainPage} /> */}
+            <Route exact path="/sounter" component={SaunterPage} />
           </Switch>
         </Router>
         {/* <AppLoading /> */}

@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  width: 100%;
+  max-width: 1112px;
+  margin: 0 auto;
+  padding: 20px 15px;
+  border-bottom: 2px solid grey;
+
+  .title {
+    display: inline-block;
+    margin-left: 30px;
+    margin-bottom: 0;
+    font-size: 25px;
+    font-weight: 500;
+  }
+  .buttonAddPath {
+    display: inline-block;
+    width: 120px;
+    height: 40px;
+    margin-right: 0;
+    margin-left: auto;
+    background-color: rgb(31, 162, 250);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

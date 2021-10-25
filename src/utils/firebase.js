@@ -9,6 +9,7 @@ let config = {
 }
 const app = firebase.initializeApp(config)
 const auth = app.auth()
+auth.languageCode = 'en'
 const googleProvider = new firebase.auth.GoogleAuthProvider()
 const facebookProvider = new firebase.auth.FacebookAuthProvider()
 

@@ -1,0 +1,35 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  list-style: none;
+  border-radius: 5px;
+  background-color: rgb(228, 221, 221);
+
+  .icon {
+    margin-right: 15px;
+  }
+  .title {
+    margin-bottom: 0;
+    font-size: 25px;
+    font-weight: 600;
+  }
+  .distance {
+    display: block;
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-bottom: 0;
+    font-size: 25px;
+    font-weight: 600;
+  }
+  .buttonGetDirections {
+    border: none;
+    background-color: rgb(228, 221, 221);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

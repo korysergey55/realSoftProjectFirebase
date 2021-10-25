@@ -7,21 +7,29 @@ import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 import { toJS } from 'mobx'
 import { signInWithGoogle, signInWithFacebook, logout } from 'utils/firebase'
+import { useHistory } from 'react-router'
 
 const Header = observer(() => {
   const { authAPI } = useStore()
+  const history = useHistory()
+
+  useEffect(() => {
+    if (authAPI.accessToken) {
+      history.push('/sounter')
+    }
+  }, [authAPI.accessToken])
 
   const loginAuth = async (e: any) => {
     if (e.currentTarget.name === 'google') {
       const res: any = await signInWithGoogle()
       authAPI.setAccessTokenAPI(res.accessToken)
-      // authAPI.fetchAuthGoogleAPI(res.accessToken)
-      // console.log(res.accessToken)
-    } else {
+      authAPI.setAuthAPI(res)
+    }
+    if (e.currentTarget.name === 'facebook') {
       const res: any = await signInWithFacebook()
       authAPI.setAccessTokenAPI(res)
+      authAPI.setAuthAPI(res)
       // console.log(res)
-      // authAPI.fetchAuthFacebookAPI('facebook')
     }
   }
   const logoutAuth = () => {
@@ -34,28 +42,36 @@ const Header = observer(() => {
       <header className={styles.header}>
         <div className={styles.container}>
           <ul className={styles.list}>
-            <li className={styles.item}>
-              <p className={styles.text}>Logit with Google</p>
-              <button
-                className={styles.loginBtn}
-                type="button"
-                name="google"
-                onClick={e => loginAuth(e)}
-              >
-                <FontAwesomeIcon icon={faGoogle} color="white" size="2x" />
-              </button>
-            </li>
-            <li className={styles.item}>
-              <p className={styles.text}>Logit with Facebook</p>
-              <button
-                className={styles.loginBtn}
-                type="button"
-                name="facebook"
-                onClick={e => loginAuth(e)}
-              >
-                <FontAwesomeIcon icon={faFacebookF} color="white" size="2x" />
-              </button>
-            </li>
+            {!authAPI.accessToken ? (
+              <>
+                <li className={styles.item}>
+                  <p className={styles.text}>Logit with Google</p>
+                  <button
+                    className={styles.loginBtn}
+                    type="button"
+                    name="google"
+                    onClick={e => loginAuth(e)}
+                  >
+                    <FontAwesomeIcon icon={faGoogle} color="white" size="2x" />
+                  </button>
+                </li>
+                <li className={styles.item}>
+                  <p className={styles.text}>Logit with Facebook</p>
+                  <button
+                    className={styles.loginBtn}
+                    type="button"
+                    name="facebook"
+                    onClick={e => loginAuth(e)}
+                  >
+                    <FontAwesomeIcon
+                      icon={faFacebookF}
+                      color="white"
+                      size="2x"
+                    />
+                  </button>
+                </li>
+              </>
+            ) : null}
             {authAPI.accessToken ? (
               <li className={styles.item}>
                 <p className={styles.text}>Logout</p>
