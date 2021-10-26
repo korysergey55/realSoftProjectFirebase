@@ -1,11 +1,12 @@
+import authAPI from './authAPI'
+import sounterState from './saunter'
 import { createContext, useContext } from 'react'
 import { configure, observable } from 'mobx'
-import authAPI from './authAPI'
-
 configure({ enforceActions: 'observed' })
 
 class RootStore {
   @observable authAPI = authAPI
+  @observable sounterState = sounterState
 }
 
 const rootStore = new RootStore()

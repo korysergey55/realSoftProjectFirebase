@@ -8,11 +8,17 @@
   border-radius: 5px;
   background-color: rgb(228, 221, 221);
 
+  &:hover {
+    cursor: pointer;
+  }
+
   .icon {
     margin-right: 15px;
   }
   .title {
+    display: inline-block;
     margin-bottom: 0;
+    margin-left: 5px;
     font-size: 25px;
     font-weight: 600;
   }
@@ -32,4 +38,7 @@
       cursor: pointer;
     }
   }
+}
+.itemActive {
+  background-color: rgb(84, 199, 245);
 }

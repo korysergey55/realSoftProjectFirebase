@@ -1,15 +1,34 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import IList from 'models/index'
 import styles from './styles.module.scss'
+import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowsAlt, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowsAlt,
+  faArrowRight,
+  faStar,
+} from '@fortawesome/free-solid-svg-icons'
+import { useStore } from 'stores'
+import { toJS } from 'mobx'
 
-const SounterList: React.FC<IList> = ({ title, text, distance }) => {
+interface ISouterProps {
+  item: IList
+}
+const SounterList: React.FC<ISouterProps> = ({ item }) => {
+  const { sounterState } = useStore()
+  const { item: currentItem } = sounterState
+
   const GetDirections = () => {
-    console.log('GetDirections')
+    sounterState.setItem(item)
   }
   return (
-    <li className={styles.item}>
+    <li
+      className={classNames({
+        [styles.item]: true,
+        [styles.itemActive]: item.id === currentItem?.id,
+      })}
+      onClick={GetDirections}
+    >
       <FontAwesomeIcon
         icon={faArrowsAlt}
         color="grey"
@@ -17,16 +36,17 @@ const SounterList: React.FC<IList> = ({ title, text, distance }) => {
         className={styles.icon}
       />
       <div className={styles.container}>
-        <h2 className={styles.title}>{title}</h2>
-        <p className={styles.text}>{text}</p>
+        {item.favorite ? (
+          <>
+            <FontAwesomeIcon icon={faStar} color="yellow" size="2x" />
+          </>
+        ) : null}
+        <h2 className={styles.title}>{item.title}</h2>
+        <p className={styles.text}>{item.text}</p>
       </div>
-      <p className={styles.distance}>{distance}</p>
-      <button
-        type="button"
-        className={styles.buttonGetDirections}
-        onClick={GetDirections}
-      >
-        <FontAwesomeIcon icon={faArrowRight} color="grey" size="2x" />
+      <p className={styles.distance}>{item.distance}km</p>
+      <button type="button" className={styles.buttonGetDirections}>
+        <FontAwesomeIcon icon={faArrowRight} color="grey" size="1x" />
       </button>
     </li>
   )
