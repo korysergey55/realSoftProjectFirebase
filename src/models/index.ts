@@ -1,7 +1,10 @@
 export default interface IList {
   title: string
-  text: string
+  shortDescription: string
+  fullDescription?: string
   distance: number
   favorite?: boolean
+  lat?: any
+  lng?: any
   id?: number
 }

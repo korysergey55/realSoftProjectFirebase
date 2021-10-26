@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styles from './styles.module.scss'
 import MapComponent from 'components/MapComponent'
-import SearchForm from '../SearchForm'
+import Filter from '../Filter'
 import SounterList from '../SounterList'
 import { listItems } from 'sources/items'
 import { useStore } from 'stores'
@@ -20,7 +20,7 @@ const SounterComponent = observer(() => {
   return (
     <div className={styles.container}>
       <div className={styles.leftSide}>
-        <SearchForm />
+        <Filter />
         <ul className={styles.list}>
           {listItems.map(item => (
             <SounterList item={item} key={item.id} />
@@ -35,7 +35,7 @@ const SounterComponent = observer(() => {
                 <h2 className={styles.title}>{item.title}</h2>
                 <p className={styles.distance}>{item.distance}km</p>
               </div>
-              <p className={styles.text}>{item.text}</p>
+              <p className={styles.text}>{item.shortDescription}</p>
             </div>
             <MapComponent />
             <button

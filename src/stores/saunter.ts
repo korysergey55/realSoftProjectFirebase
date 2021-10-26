@@ -11,8 +11,9 @@ import {
 } from 'mobx'
 
 class SounterState {
-  @observable item: any | null = null
+  @observable item: IList | null = null
   @observable modal: boolean = false
+  @observable path: any[] = []
 
   constructor() {
     makeAutoObservable(this)
@@ -26,6 +27,9 @@ class SounterState {
   }
   @action setModal() {
     this.modal = !this.modal
+  }
+  @action setPath(data: any) {
+    this.path = [...this.path, data]
   }
 }
 

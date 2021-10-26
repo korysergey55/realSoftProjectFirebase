@@ -36,13 +36,11 @@ const SounterList: React.FC<ISouterProps> = ({ item }) => {
         className={styles.icon}
       />
       <div className={styles.container}>
-        {item.favorite ? (
-          <>
-            <FontAwesomeIcon icon={faStar} color="yellow" size="2x" />
-          </>
-        ) : null}
+        {item.favorite && (
+          <FontAwesomeIcon icon={faStar} color="yellow" size="2x" />
+        )}
         <h2 className={styles.title}>{item.title}</h2>
-        <p className={styles.text}>{item.text}</p>
+        <p className={styles.text}>{item.shortDescription}</p>
       </div>
       <p className={styles.distance}>{item.distance}km</p>
       <button type="button" className={styles.buttonGetDirections}>

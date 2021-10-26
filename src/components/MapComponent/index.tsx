@@ -2,6 +2,8 @@
 // @ts-ignore
 import React, { useCallback, useState, useEffect, useMemo } from 'react'
 import styles from './styles.module.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import {
   GoogleMap,
   useJsApiLoader,
@@ -17,7 +19,10 @@ const containerStyle = {
   height: '500px',
 }
 
-const MapComponent = () => {
+interface IMap {
+  button?: boolean
+}
+const MapComponent: React.FC<IMap> = ({ button = false }) => {
   const { positions } = useGeoPosition()
   const [currentPosition, setCurrentPosition] = useState<any>({})
   const [map, setMap] = useState(null)
@@ -124,8 +129,23 @@ const MapComponent = () => {
     setDestination([endMarkerPosition])
   }
 
+  const addMarker = () => {
+    console.log('addMarker')
+  }
+
   return (
     <div className={styles.container}>
+      {button && (
+        <button type="button" className={styles.addMarker} onClick={addMarker}>
+          <FontAwesomeIcon
+            icon={faMapMarkerAlt}
+            color="grey"
+            size="1x"
+            className={styles.btnIcon}
+          />
+          Add marker
+        </button>
+      )}
       <div className={styles.containerStyle}>
         {isLoaded ? (
           <GoogleMap

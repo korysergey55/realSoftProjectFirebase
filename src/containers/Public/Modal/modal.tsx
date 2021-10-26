@@ -1,8 +1,30 @@
-import * as React from 'react'
-const ModalComponent = () => {
+import React from 'react'
+import styles from './styles.module.scss'
+import { Modal } from 'antd'
+import { useStore } from 'stores'
+
+const ModalComponent: React.FC<any> = ({ visible, children }: any) => {
+  const { sounterState } = useStore()
+
+  const handleOk = () => {
+    sounterState.setModal()
+  }
+  const handleCancel = () => {
+    sounterState.setModal()
+  }
+
   return (
     <>
-      <h2>ModalComponent</h2>
+      <Modal
+        title="Add new path"
+        visible={visible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        className={styles.modal}
+        width="1110px"
+      >
+        {children}
+      </Modal>
     </>
   )
 }

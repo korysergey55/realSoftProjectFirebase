@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1112px;
+  margin: 0 auto;
+  padding: 20px 15px;
+
+  .leftSide {
+    width: 100%;
+    max-width: 510px;
+    padding-right: 15px;
+    border-right: 1px solid gray;
+
+    .label {
+      margin-bottom: 0;
+      font-size: 25px;
+      font-weight: 600;
+    }
+    .input {
+      border-radius: 7px;
+      resize: none;
+    }
+
+    .inputFullDescription {
+      height: 120px;
+      margin-bottom: 50px;
+      border-radius: 7px;
+      resize: none;
+    }
+    .lengthContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .length {
+        display: block;
+        margin-bottom: 0;
+        margin-left: 10px;
+        font-size: 25px;
+        font-weight: 600;
+      }
+    }
+    .buttonAddPath {
+      display: block;
+      margin: 0 auto;
+      margin-top: 50px;
+      margin-bottom: 20px;
+      width: 120px;
+      height: 50px;
+      border-radius: 7px;
+      border: 1px solid gray;
+      color: black;
+      background-color: transparent;
+      transition: background-color 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:hover {
+        background-color: greenyellow;
+      }
+
+      .btnIcon {
+        margin-right: 10px;
+      }
+    }
+  }
+  .rigthSide {
+    width: 100%;
+    max-width: 510px;
+  }
+}

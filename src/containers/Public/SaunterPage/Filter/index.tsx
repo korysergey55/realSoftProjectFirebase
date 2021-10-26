@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import { Input } from 'antd'
 const { Search } = Input
 
-const SearchForm = () => {
+const Filter = () => {
   const [filterValue, setFilterValue] = useState<string>('')
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,4 +25,4 @@ const SearchForm = () => {
   )
 }
 
-export default SearchForm
+export default Filter
