@@ -4,13 +4,13 @@ import { Modal } from 'antd'
 import { useStore } from 'stores'
 
 const ModalComponent: React.FC<any> = ({ visible, children }: any) => {
-  const { sounterState } = useStore()
+  const { sounterStore } = useStore()
 
   const handleOk = () => {
-    sounterState.setModal()
+    sounterStore.setModal()
   }
   const handleCancel = () => {
-    sounterState.setModal()
+    sounterStore.setModal()
   }
 
   return (

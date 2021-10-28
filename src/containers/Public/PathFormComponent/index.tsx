@@ -26,8 +26,8 @@ const initialPathState = {
 const maxLength = 160
 
 const PathFormComponent = observer(() => {
-  const { sounterState } = useStore()
-  const { distance } = sounterState
+  const { sounterStore } = useStore()
+  const { distance } = sounterStore
 
   const [inputValue, setInputValue] = useState<any>({ ...initialInputState })
   const [completedPath, setCompletedPath] = useState<any>({
@@ -35,8 +35,12 @@ const PathFormComponent = observer(() => {
   })
 
   useEffect(() => {
-    const inputObjectWithId = { ...inputValue, id: uuidv4(), distance }
-    setCompletedPath(inputObjectWithId)
+    const inputObjectWithInputIdDistance = {
+      ...inputValue,
+      id: uuidv4(),
+      distance,
+    }
+    setCompletedPath(inputObjectWithInputIdDistance)
   }, [inputValue, distance])
   console.log('completedPath', completedPath)
 
@@ -45,8 +49,8 @@ const PathFormComponent = observer(() => {
     setInputValue((prev: any) => ({ ...prev, [name]: value }))
   }
   const onFinish = () => {
-    sounterState.setUserPath(completedPath)
-    sounterState.setModal()
+    sounterStore.setUserPath(completedPath)
+    sounterStore.setModal()
   }
   // console.log('inputValue', inputValue)
   // console.log('sounterState.path', toJS(sounterState.path))
@@ -93,7 +97,7 @@ const PathFormComponent = observer(() => {
             />
             <div className={styles.lengthContainer}>
               <FontAwesomeIcon icon={faMapMarkedAlt} color="grey" size="2x" />
-              <p className={styles.length}>Length {sounterState.distance}</p>
+              <p className={styles.length}>Length {sounterStore.distance}</p>
             </div>
             <Form.Item>
               <Button
@@ -113,7 +117,7 @@ const PathFormComponent = observer(() => {
           </Form>
         </div>
         <div className={styles.rigthSide}>
-          <MapComponent button={true} />
+          <MapComponent button={true} click={true} />
         </div>
       </div>
     </>

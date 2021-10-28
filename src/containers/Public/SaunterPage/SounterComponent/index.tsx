@@ -8,8 +8,8 @@ import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 
 const SounterComponent = observer(() => {
-  const { sounterState } = useStore()
-  const { item } = sounterState
+  const { sounterStore } = useStore()
+  const { item } = sounterStore
 
   const addToFavorites = () => {
     console.log('AddToFavorites')

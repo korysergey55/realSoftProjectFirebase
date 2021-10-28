@@ -6,7 +6,7 @@ configure({ enforceActions: 'observed' })
 
 class RootStore {
   @observable authAPI = authAPI
-  @observable sounterState = sounterState
+  @observable sounterStore = sounterState
 }
 
 const rootStore = new RootStore()

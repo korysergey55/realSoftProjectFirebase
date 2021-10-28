@@ -15,11 +15,11 @@ interface ISouterProps {
   item: IList
 }
 const SounterList: React.FC<ISouterProps> = ({ item }) => {
-  const { sounterState } = useStore()
-  const { item: currentItem } = sounterState
+  const { sounterStore } = useStore()
+  const { item: currentItem } = sounterStore
 
   const GetDirections = () => {
-    sounterState.setItem(item)
+    sounterStore.setItem(item)
   }
   return (
     <li

@@ -21,15 +21,17 @@ const containerStyle = {
 }
 interface IMap {
   button?: boolean
+  click?: boolean
 }
 // 'Chicago, IL' 'Los Angeles, CA' 'DRIVING'
 
-const MapComponent: React.FC<IMap> = ({ button = false }) => {
-  const { sounterState } = useStore()
+const MapComponent: React.FC<IMap> = ({ button = false, click = false }) => {
+  const { sounterStore } = useStore()
   const { positions } = useGeoPosition()
   const [currentPosition, setCurrentPosition] = useState<any>({})
   const [map, setMap] = useState(null)
-
+  const [marker, setMarker] = useState<any>([])
+  const [distanceLength, setLength] = useState<number>(0)
   //directions service
   const [options, setOptions] = useState<any>({
     destination: '',
@@ -39,7 +41,6 @@ const MapComponent: React.FC<IMap> = ({ button = false }) => {
     optimizeWaypoints: true,
   })
   const [response, setResponse] = useState(null)
-
   // DistanceMatrix
   const [optionsMatrix, setOptionsMatrix] = useState<any>({
     destinations: [],
@@ -49,9 +50,6 @@ const MapComponent: React.FC<IMap> = ({ button = false }) => {
     avoidTolls: false,
   })
   const [responceMatrix, setResponseMatrix] = useState<any>(null)
-
-  const [marker, setMarker] = useState<any>([])
-  const [length, setLength] = useState<any>(0)
 
   useEffect(() => {
     positions &&
@@ -65,30 +63,30 @@ const MapComponent: React.FC<IMap> = ({ button = false }) => {
     if (marker.length > 1) {
       distance(marker)
       distanceMatrix(marker)
-      sounterState.setUserMarkers(marker)
+      sounterStore.setUserMarkers(marker)
     }
   }, [marker])
 
   useEffect(() => {
-    roadLength()
+    findTotalDistance()
   }, [responceMatrix])
 
   useEffect(() => {
-    if (length > 0) {
-      sounterState.setDistance(length)
+    if (distanceLength > 0) {
+      sounterStore.setDistance(distanceLength)
     }
-  }, [length])
+  }, [distanceLength])
 
   const addMarker = () => {
     setMarker([...marker, { ...currentPosition }])
   }
-  const roadLength = () => {
-    let totalRoadLength = 0
+  const findTotalDistance = () => {
+    let totalRoadDistance = 0
     if (responceMatrix !== null) {
       const itemValue = responceMatrix.rows[0].elements.map((item: any) => {
-        totalRoadLength += item.distance.value
+        totalRoadDistance += item.distance.value
       })
-      setLength(totalRoadLength)
+      setLength(totalRoadDistance)
     }
   }
 
@@ -110,7 +108,6 @@ const MapComponent: React.FC<IMap> = ({ button = false }) => {
     const e = args[0]
     const lat: any = e.latLng.lat()
     const lng: any = e.latLng.lng()
-
     const arr = [...marker, { lat, lng }]
     setMarker(arr)
   }
@@ -145,11 +142,11 @@ const MapComponent: React.FC<IMap> = ({ button = false }) => {
   const distanceMatrixCallback = useCallback(res => {
     // console.log('distanceMatrixCallback', toJS(res))
     if (res !== null) {
-      let eachElement = false
+      let eachElementOK = false
       res.rows[0].elements.forEach((el: any) => {
-        eachElement = el.status === 'OK'
+        eachElementOK = el.status === 'OK'
       })
-      if (eachElement) {
+      if (eachElementOK) {
         setResponseMatrix(res)
       } else {
       }
@@ -165,7 +162,6 @@ const MapComponent: React.FC<IMap> = ({ button = false }) => {
       destinations,
     })
   }
-
   // const directionsMatrixOptions = useMemo(() => {
   //   return {
   //     destinations: [...destinationMatrix],
@@ -195,7 +191,7 @@ const MapComponent: React.FC<IMap> = ({ button = false }) => {
             zoom={100}
             onLoad={onLoad}
             onUnmount={onUnmount}
-            onClick={onMapClick}
+            onClick={click ? onMapClick : () => {}}
           >
             {/* <Marker
               label="currentPosition"
@@ -213,16 +209,16 @@ const MapComponent: React.FC<IMap> = ({ button = false }) => {
               callback={distanceMatrixCallback}
             />
 
-            {marker &&
+            {/* {marker &&
               marker.length === 1 &&
               marker.map((el: any) => (
-                <Marker position={el} draggable={true} key={el.lat + el.lng} />
-              ))}
+                <Marker position={el} draggable={false} key={el.lat + el.lng} />
+              ))} */}
             {marker && marker.length > 1 ? (
               <DirectionsRenderer
                 options={{
                   directions: response,
-                  draggable: true,
+                  // draggable: true,
                 }}
               />
             ) : null}

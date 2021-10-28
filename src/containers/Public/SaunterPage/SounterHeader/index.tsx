@@ -8,14 +8,14 @@ import ModalComponent from 'containers/Public/Modal/modal'
 import PathFormComponent from 'containers/Public/PathFormComponent'
 
 const SounterHeader = observer(() => {
-  const { sounterState } = useStore()
+  const { sounterStore } = useStore()
 
   const addPath = () => {
-    sounterState.setModal()
+    sounterStore.setModal()
   }
   return (
     <div className={styles.container}>
-      <ModalComponent visible={sounterState.modal}>
+      <ModalComponent visible={sounterStore.modal}>
         <PathFormComponent />
       </ModalComponent>
       <div>
