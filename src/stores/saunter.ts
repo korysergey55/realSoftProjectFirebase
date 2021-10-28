@@ -13,7 +13,9 @@ import {
 class SounterState {
   @observable item: IList | null = null
   @observable modal: boolean = false
-  @observable path: any[] = []
+  @observable userPath: any[] = []
+  @observable distance: number = 0
+  @observable roadMarkers: any = null
 
   constructor() {
     makeAutoObservable(this)
@@ -28,8 +30,14 @@ class SounterState {
   @action setModal() {
     this.modal = !this.modal
   }
-  @action setPath(data: any) {
-    this.path = [...this.path, data]
+  @action setUserPath(data: any) {
+    this.userPath = [...this.userPath, data]
+  }
+  @action setDistance(data: number) {
+    this.distance = data
+  }
+  @action setUserMarkers(markerArr: any) {
+    this.roadMarkers = markerArr
   }
 }
 

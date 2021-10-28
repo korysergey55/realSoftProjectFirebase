@@ -9,7 +9,7 @@ import {
   DirectionsRenderer,
 } from '@react-google-maps/api'
 import { Marker } from '@react-google-maps/api'
-import useGeoPosition from 'containers/Public/MainPage/CurrentGeoposition'
+import useGeoPosition from 'components/CurrentGeoposition'
 
 const containerStyle = {
   width: '100%',

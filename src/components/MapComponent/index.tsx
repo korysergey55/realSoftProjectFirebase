@@ -1,5 +1,4 @@
 /* global google */
-// @ts-ignore
 import React, { useCallback, useState, useEffect, useMemo } from 'react'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,37 +9,49 @@ import {
   DirectionsService,
   DirectionsRenderer,
   DistanceMatrixService,
+  Marker,
 } from '@react-google-maps/api'
-import { Marker } from '@react-google-maps/api'
-import useGeoPosition from 'containers/Public/MainPage/CurrentGeoposition'
+import useGeoPosition from 'components/CurrentGeoposition/index'
+import { toJS } from 'mobx'
+import { useStore } from 'stores'
 
 const containerStyle = {
   width: '100%',
   height: '500px',
 }
-
 interface IMap {
   button?: boolean
 }
+// 'Chicago, IL' 'Los Angeles, CA' 'DRIVING'
+
 const MapComponent: React.FC<IMap> = ({ button = false }) => {
+  const { sounterState } = useStore()
   const { positions } = useGeoPosition()
   const [currentPosition, setCurrentPosition] = useState<any>({})
   const [map, setMap] = useState(null)
 
   //directions service
-  // 'Chicago, IL' 'Los Angeles, CA' 'DRIVING'
-  const [travelMode, setTravelMode] = useState<any>('WALKING')
-  const [origin, setOrigin] = useState<any>([])
-  const [destination, setDestination] = useState<any>([])
+  const [options, setOptions] = useState<any>({
+    destination: '',
+    origin: '',
+    travelMode: 'WALKING',
+    waypoints: [],
+    optimizeWaypoints: true,
+  })
   const [response, setResponse] = useState(null)
-  const [startMarkerPosition, setStartMarkerPosition] = useState<any>({
-    lat: '',
-    lng: '',
+
+  // DistanceMatrix
+  const [optionsMatrix, setOptionsMatrix] = useState<any>({
+    destinations: [],
+    origins: [],
+    travelMode: 'WALKING',
+    avoidHighways: false,
+    avoidTolls: false,
   })
-  const [endMarkerPosition, setEndMarkerPosition] = useState<any>({
-    lat: '',
-    lng: '',
-  })
+  const [responceMatrix, setResponseMatrix] = useState<any>(null)
+
+  const [marker, setMarker] = useState<any>([])
+  const [length, setLength] = useState<any>(0)
 
   useEffect(() => {
     positions &&
@@ -48,11 +59,38 @@ const MapComponent: React.FC<IMap> = ({ button = false }) => {
         lat: positions?.latitude,
         lng: positions?.longitude,
       })
-    setOrigin([currentPosition])
-    setDestination([
-      { lat: positions?.latitude + 0.0001, lng: positions?.longitude + 0.0001 },
-    ])
   }, [positions])
+
+  useEffect(() => {
+    if (marker.length > 1) {
+      distance(marker)
+      distanceMatrix(marker)
+      sounterState.setUserMarkers(marker)
+    }
+  }, [marker])
+
+  useEffect(() => {
+    roadLength()
+  }, [responceMatrix])
+
+  useEffect(() => {
+    if (length > 0) {
+      sounterState.setDistance(length)
+    }
+  }, [length])
+
+  const addMarker = () => {
+    setMarker([...marker, { ...currentPosition }])
+  }
+  const roadLength = () => {
+    let totalRoadLength = 0
+    if (responceMatrix !== null) {
+      const itemValue = responceMatrix.rows[0].elements.map((item: any) => {
+        totalRoadLength += item.distance.value
+      })
+      setLength(totalRoadLength)
+    }
+  }
 
   //map code
   const { isLoaded } = useJsApiLoader({
@@ -67,71 +105,74 @@ const MapComponent: React.FC<IMap> = ({ button = false }) => {
   const onUnmount = useCallback(function callback(map) {
     setMap(null)
   }, [])
-  const onMapClick = useCallback((...args) => {
-    console.log('onClick args: ', args)
-  }, [])
+
+  const onMapClick = (...args: any) => {
+    const e = args[0]
+    const lat: any = e.latLng.lat()
+    const lng: any = e.latLng.lng()
+
+    const arr = [...marker, { lat, lng }]
+    setMarker(arr)
+  }
 
   //directions service code
   const directionsCallback = useCallback(res => {
-    console.log('responseOK: ', res)
+    // console.log('directionsCallback', toJS(res))
     if (res !== null) {
       if (res.status === 'OK') {
         setResponse(res)
       } else {
-        // console.log('response: ', res)
       }
     }
   }, [])
-  const directionsServiceOptions = useMemo(() => {
-    return {
-      destination: destination[0],
-      origin: origin[0],
-      travelMode: travelMode,
-    }
-  }, [destination, origin, travelMode])
+
+  const distance = (markerArr: any) => {
+    const waypoints = markerArr.map((marker: any) => ({
+      location: { lat: marker.lat, lng: marker.lng },
+      stopover: true,
+    }))
+    const origin = waypoints.shift().location
+    const destination = waypoints.pop().location
+    setOptions({
+      ...options,
+      waypoints,
+      origin,
+      destination,
+    })
+  }
 
   // DistanceMatrix code
-  const directionsMatrixOptions = useMemo(() => {
-    return {
-      destinations: [...destination],
-      origins: [...origin],
-      travelMode: travelMode,
-    }
-  }, [destination, origin, travelMode])
-
   const distanceMatrixCallback = useCallback(res => {
+    // console.log('distanceMatrixCallback', toJS(res))
     if (res !== null) {
-      console.log('distanceMatrixCallback-responseOK: ', res)
-      if (res.status === 'OK') {
-        setResponse(res)
+      let eachElement = false
+      res.rows[0].elements.forEach((el: any) => {
+        eachElement = el.status === 'OK'
+      })
+      if (eachElement) {
+        setResponseMatrix(res)
       } else {
-        console.log('response: ', res)
       }
     }
   }, [])
 
-  const onDragStartMarker = (e: any) => {
-    const lat: any = e.latLng.lat()
-    const lng: any = e.latLng.lng()
-    setStartMarkerPosition({
-      lat,
-      lng,
+  const distanceMatrix = (markerArr: any) => {
+    const origins = [markerArr[0]]
+    const destinations = markerArr
+    setOptionsMatrix({
+      ...optionsMatrix,
+      origins,
+      destinations,
     })
-    setOrigin([startMarkerPosition])
-  }
-  const onDragEndMarker = (e: any) => {
-    const lat: any = e.latLng.lat()
-    const lng: any = e.latLng.lng()
-    setEndMarkerPosition({
-      lat,
-      lng,
-    })
-    setDestination([endMarkerPosition])
   }
 
-  const addMarker = () => {
-    console.log('addMarker')
-  }
+  // const directionsMatrixOptions = useMemo(() => {
+  //   return {
+  //     destinations: [...destinationMatrix],
+  //     origins: [...originDistanceMatrix],
+  //     travelMode: travelMode,
+  //   }
+  // }, [destinationMatrix, originDistanceMatrix, travelMode])
 
   return (
     <div className={styles.container}>
@@ -156,32 +197,35 @@ const MapComponent: React.FC<IMap> = ({ button = false }) => {
             onUnmount={onUnmount}
             onClick={onMapClick}
           >
-            <Marker
+            {/* <Marker
               label="currentPosition"
               position={currentPosition}
               // draggable={true}
-              // onDragEnd={onDragEndMarker}
-            ></Marker>
-            {destination && origin && (
-              <DistanceMatrixService
-                options={{ ...directionsMatrixOptions }}
-                callback={distanceMatrixCallback}
-              />
-            )}
-            {destination && origin && (
+            ></Marker> */}
+            {marker && (
               <DirectionsService
-                options={directionsServiceOptions}
+                options={options}
                 callback={directionsCallback}
               />
             )}
-            {response !== null && (
+            <DistanceMatrixService
+              options={optionsMatrix}
+              callback={distanceMatrixCallback}
+            />
+
+            {marker &&
+              marker.length === 1 &&
+              marker.map((el: any) => (
+                <Marker position={el} draggable={true} key={el.lat + el.lng} />
+              ))}
+            {marker && marker.length > 1 ? (
               <DirectionsRenderer
                 options={{
                   directions: response,
                   draggable: true,
                 }}
               />
-            )}
+            ) : null}
           </GoogleMap>
         ) : null}
       </div>
