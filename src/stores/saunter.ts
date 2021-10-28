@@ -10,7 +10,7 @@ import {
   toJS,
 } from 'mobx'
 
-class SounterState {
+class SounterStore {
   @observable item: IList | null = null
   @observable modal: boolean = false
   @observable userPath: any[] = []
@@ -41,4 +41,4 @@ class SounterState {
   }
 }
 
-export default new SounterState()
+export default new SounterStore()

@@ -22,10 +22,15 @@ const containerStyle = {
 interface IMap {
   button?: boolean
   click?: boolean
+  currentPos?: boolean
 }
 // 'Chicago, IL' 'Los Angeles, CA' 'DRIVING'
 
-const MapComponent: React.FC<IMap> = ({ button = false, click = false }) => {
+const MapComponent: React.FC<IMap> = ({
+  button = false,
+  click = false,
+  currentPos = false,
+}) => {
   const { sounterStore } = useStore()
   const { positions } = useGeoPosition()
   const [currentPosition, setCurrentPosition] = useState<any>({})
@@ -193,11 +198,13 @@ const MapComponent: React.FC<IMap> = ({ button = false, click = false }) => {
             onUnmount={onUnmount}
             onClick={click ? onMapClick : () => {}}
           >
-            {/* <Marker
-              label="currentPosition"
-              position={currentPosition}
-              // draggable={true}
-            ></Marker> */}
+            {currentPos && (
+              <Marker
+                label="currentPosition"
+                position={currentPosition}
+                // draggable={true}
+              ></Marker>
+            )}
             {marker && (
               <DirectionsService
                 options={options}
