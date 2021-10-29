@@ -10,39 +10,54 @@ import { toJS } from 'mobx'
 import MapComponent from 'components/MapComponent/index'
 const { v4: uuidv4 } = require('uuid')
 
-const initialInputState = {
-  title: '',
-  shortDescription: '',
-  fullDescription: '',
-  id: null,
-}
-const initialPathState = {
-  title: '',
-  shortDescription: '',
-  fullDescription: '',
-  id: null,
-  distance: 0,
-}
+// const initialInputState = {
+//   title: '',
+//   shortDescription: '',
+//   fullDescription: '',
+//   id: null,
+// }
+// const initialPathState = {
+//   title: '',
+//   shortDescription: '',
+//   fullDescription: '',
+//   id: null,
+//   distance: 0,
+//   favorite: false,
+//   markersArr: null,
+// }
 const maxLength = 160
 
 const PathFormComponent = observer(() => {
   const { sounterStore } = useStore()
-  const { distance } = sounterStore
-
-  const [inputValue, setInputValue] = useState<any>({ ...initialInputState })
+  const { distance, userArrMarkers } = sounterStore
+  const [inputValue, setInputValue] = useState<any>({
+    title: '',
+    shortDescription: '',
+    fullDescription: '',
+    id: null,
+  })
   const [completedPath, setCompletedPath] = useState<any>({
-    ...initialPathState,
+    title: '',
+    shortDescription: '',
+    fullDescription: '',
+    id: null,
+    distance: 0,
+    favorite: false,
+    markersArr: null,
   })
 
   useEffect(() => {
-    const inputObjectWithInputIdDistance = {
-      ...inputValue,
-      id: uuidv4(),
-      distance,
+    const addUserPathtoStore = () => {
+      const completedObject = {
+        ...inputValue,
+        id: uuidv4(),
+        distance,
+        markersArr: toJS(userArrMarkers),
+      }
+      setCompletedPath(completedObject)
     }
-    setCompletedPath(inputObjectWithInputIdDistance)
-  }, [inputValue, distance])
-  console.log('completedPath', completedPath)
+    addUserPathtoStore()
+  }, [inputValue, distance, userArrMarkers])
 
   const onChangeInput = (e: any) => {
     const { name, value } = e.target
@@ -52,9 +67,11 @@ const PathFormComponent = observer(() => {
     sounterStore.setUserPath(completedPath)
     sounterStore.setModal()
   }
-  // console.log('inputValue', inputValue)
-  // console.log('sounterState.path', toJS(sounterState.path))
 
+  const convertor = (item: any) => {
+    const result = (item / 1000).toFixed(1)
+    return result
+  }
   return (
     <>
       <div className={styles.container}>
@@ -97,7 +114,9 @@ const PathFormComponent = observer(() => {
             />
             <div className={styles.lengthContainer}>
               <FontAwesomeIcon icon={faMapMarkedAlt} color="grey" size="2x" />
-              <p className={styles.length}>Length {sounterStore.distance}</p>
+              <p className={styles.length}>
+                Length {convertor(sounterStore.distance)} km
+              </p>
             </div>
             <Form.Item>
               <Button

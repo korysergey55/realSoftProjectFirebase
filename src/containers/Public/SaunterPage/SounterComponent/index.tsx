@@ -1,30 +1,42 @@
-import * as React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import MapComponent from 'components/MapComponent'
 import Filter from '../Filter'
 import SounterList from '../SounterList'
-import { listItems } from 'sources/items'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 
 const SounterComponent = observer(() => {
   const { sounterStore } = useStore()
-  const { item } = sounterStore
+  const { item, filteredUserPath } = sounterStore
+
+  useEffect(() => {}, [sounterStore])
 
   const addToFavorites = () => {
-    console.log('AddToFavorites')
+    sounterStore.setFavorite()
   }
-  const removePath = () => {
-    console.log('removePath')
+  const removePath = (id: any) => {
+    sounterStore.removeUserPath(id)
+    sounterStore.setItem(null)
   }
+  const convertor = (item: any) => {
+    const result = (item / 1000).toFixed(1)
+    return result
+  }
+
+  // filteredUserPath
   return (
     <div className={styles.container}>
       <div className={styles.leftSide}>
         <Filter />
         <ul className={styles.list}>
-          {listItems.map(item => (
-            <SounterList item={item} key={item.id} />
-          ))}
+          {filteredUserPath.length > 0 ? (
+            filteredUserPath.map(item => (
+              <SounterList item={item} key={item.id} />
+            ))
+          ) : (
+            <h2 className={styles.notPathYet}>Not Path yet!</h2>
+          )}
         </ul>
       </div>
       <div className={styles.rigthSide}>
@@ -33,27 +45,31 @@ const SounterComponent = observer(() => {
             <div className={styles.pathContainer}>
               <div className={styles.pathWripper}>
                 <h2 className={styles.title}>{item.title}</h2>
-                <p className={styles.distance}>{item.distance}km</p>
+                <p className={styles.distance}>{convertor(item.distance)} km</p>
               </div>
               <p className={styles.text}>{item.shortDescription}</p>
             </div>
-            <MapComponent />
+            <MapComponent key={item.id} pathMarkers={item.markersArr} />
             <button
               className={styles.buttonAddToFavorites}
               type="button"
               onClick={addToFavorites}
             >
-              Add to favorites
+              {!item.favorite ? 'Add to favorites' : 'Remuve from favorites'}
             </button>
             <button
               className={styles.buttonRemove}
               type="button"
-              onClick={removePath}
+              onClick={() => removePath(item.id)}
             >
               Remove
             </button>
           </>
-        ) : null}
+        ) : (
+          <h2 className={styles.notPathYet}>
+            Add Path to see Map and Directions!
+          </h2>
+        )}
       </div>
     </div>
   )

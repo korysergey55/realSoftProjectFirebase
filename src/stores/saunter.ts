@@ -11,11 +11,12 @@ import {
 } from 'mobx'
 
 class SounterStore {
-  @observable item: IList | null = null
   @observable modal: boolean = false
-  @observable userPath: any[] = []
+  @observable item: any = null
   @observable distance: number = 0
-  @observable roadMarkers: any = null
+  @observable userArrMarkers: any = null
+  @observable userPath: any[] = []
+  @observable filteredUserPath: any[] = []
 
   constructor() {
     makeAutoObservable(this)
@@ -24,20 +25,35 @@ class SounterStore {
       _ => console.log(toJS(this.item))
     )
   }
-  @action setItem(itemData: IList) {
-    this.item = { ...itemData }
-  }
   @action setModal() {
     this.modal = !this.modal
   }
-  @action setUserPath(data: any) {
-    this.userPath = [...this.userPath, data]
+  @action setItem(itemData: any) {
+    this.item = itemData
   }
   @action setDistance(data: number) {
     this.distance = data
   }
   @action setUserMarkers(markerArr: any) {
-    this.roadMarkers = markerArr
+    this.userArrMarkers = markerArr
+  }
+  @action setUserPath(data: any) {
+    this.filteredUserPath = [...this.userPath, data]
+    this.userPath = [...this.userPath, data]
+  }
+  @action getFilterUserPath(data: any) {
+    const formatData = data.toLowerCase().trim()
+    const filtered: any = this.userPath.filter(path =>
+      path.title.toLowerCase().includes(formatData)
+    )
+    this.filteredUserPath = filtered
+  }
+  @action removeUserPath(data: string) {
+    const remuve = this.filteredUserPath.filter(item => item.id !== data)
+    this.filteredUserPath = remuve
+  }
+  @action setFavorite() {
+    this.item.favorite = !this.item.favorite
   }
 }
 

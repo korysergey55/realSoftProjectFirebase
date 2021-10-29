@@ -10,24 +10,31 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useStore } from 'stores'
 import { toJS } from 'mobx'
+import { observer } from 'mobx-react'
 
 interface ISouterProps {
   item: IList
 }
-const SounterList: React.FC<ISouterProps> = ({ item }) => {
+const SounterList: React.FC<ISouterProps> = observer(({ item }) => {
   const { sounterStore } = useStore()
   const { item: currentItem } = sounterStore
 
-  const GetDirections = () => {
+  const getDirections = () => {
     sounterStore.setItem(item)
   }
+
+  const convertor = (item: any) => {
+    const result = (item / 1000).toFixed(1)
+    return result
+  }
+
   return (
     <li
       className={classNames({
         [styles.item]: true,
         [styles.itemActive]: item.id === currentItem?.id,
       })}
-      onClick={GetDirections}
+      onClick={getDirections}
     >
       <FontAwesomeIcon
         icon={faArrowsAlt}
@@ -42,12 +49,12 @@ const SounterList: React.FC<ISouterProps> = ({ item }) => {
         <h2 className={styles.title}>{item.title}</h2>
         <p className={styles.text}>{item.shortDescription}</p>
       </div>
-      <p className={styles.distance}>{item.distance}km</p>
+      <p className={styles.distance}>{convertor(item.distance)} km</p>
       <button type="button" className={styles.buttonGetDirections}>
         <FontAwesomeIcon icon={faArrowRight} color="grey" size="1x" />
       </button>
     </li>
   )
-}
+})
 
 export default SounterList

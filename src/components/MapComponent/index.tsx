@@ -23,6 +23,7 @@ interface IMap {
   button?: boolean
   click?: boolean
   currentPos?: boolean
+  pathMarkers?: any
 }
 // 'Chicago, IL' 'Los Angeles, CA' 'DRIVING'
 
@@ -30,12 +31,19 @@ const MapComponent: React.FC<IMap> = ({
   button = false,
   click = false,
   currentPos = false,
+  pathMarkers = null,
 }) => {
   const { sounterStore } = useStore()
   const { positions } = useGeoPosition()
   const [currentPosition, setCurrentPosition] = useState<any>({})
   const [map, setMap] = useState(null)
-  const [marker, setMarker] = useState<any>([])
+  const [marker, setMarker] = useState<any>(() => {
+    if (pathMarkers !== null) {
+      return pathMarkers
+    } else {
+      return []
+    }
+  })
   const [distanceLength, setLength] = useState<number>(0)
   //directions service
   const [options, setOptions] = useState<any>({

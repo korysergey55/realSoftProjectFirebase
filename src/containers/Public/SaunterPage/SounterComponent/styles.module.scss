@@ -9,11 +9,14 @@
   border: 1px solid gray;
 
   .leftSide {
+    width: 525px;
     max-width: 525px;
+    height: 700px;
     max-height: 700px;
     padding-right: 15px;
     margin-bottom: 20px;
-    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
     border-right: 1px solid gray;
 
     .list {
@@ -21,9 +24,12 @@
     }
   }
   .rigthSide {
+    width: 525px;
     max-width: 525px;
+    height: 700px;
     max-height: 700px;
-    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
 
     .pathContainer {
       padding: 0 15px;
@@ -31,21 +37,27 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        max-width: 480px;
 
         .title {
+          display: block;
+          max-width: 300px;
           font-size: 30px;
           font-weight: 600;
+          overflow-wrap: break-word;
         }
         .distance {
           font-size: 30px;
           font-weight: 600;
         }
-        .text {
-          display: block;
-          margin-bottom: 0;
-          font-size: 25px;
-          font-weight: 600;
-        }
+      }
+      .text {
+        display: block;
+        margin-bottom: 0;
+        max-width: 480px;
+        font-size: 25px;
+        font-weight: 600;
+        overflow-wrap: break-word;
       }
     }
     .buttonAddToFavorites {
@@ -78,5 +90,10 @@
         cursor: pointer;
       }
     }
+  }
+  .notPathYet {
+    font-size: 25px;
+    font-weight: 600;
+    text-align: center;
   }
 }

@@ -1,15 +1,22 @@
 import React, { useState } from 'react'
 import styles from './styles.module.scss'
 import { Input } from 'antd'
+import { useStore } from 'stores'
+import { toJS } from 'mobx'
+import { observer } from 'mobx-react-lite'
 const { Search } = Input
 
-const Filter = () => {
+const Filter = observer(() => {
+  const { sounterStore } = useStore()
+
   const [filterValue, setFilterValue] = useState<string>('')
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setFilterValue(value)
+    sounterStore.getFilterUserPath(value)
   }
+
   return (
     <>
       <Search
@@ -23,6 +30,6 @@ const Filter = () => {
       />
     </>
   )
-}
+})
 
 export default Filter
