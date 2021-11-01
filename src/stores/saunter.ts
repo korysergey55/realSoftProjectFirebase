@@ -1,4 +1,4 @@
-import IList from 'models/index'
+// import IList from 'models/index'
 import {
   makeAutoObservable,
   observable,

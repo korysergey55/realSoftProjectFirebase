@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import IList from 'models/index'
+import { useStore } from 'stores'
+import { observer } from 'mobx-react'
 import styles from './styles.module.scss'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,9 +10,7 @@ import {
   faArrowRight,
   faStar,
 } from '@fortawesome/free-solid-svg-icons'
-import { useStore } from 'stores'
-import { toJS } from 'mobx'
-import { observer } from 'mobx-react'
+// import { toJS } from 'mobx'
 
 interface ISouterProps {
   item: IList
@@ -22,9 +22,8 @@ const SounterList: React.FC<ISouterProps> = observer(({ item }) => {
   const getDirections = () => {
     sounterStore.setItem(item)
   }
-
-  const convertor = (item: any) => {
-    const result = (item / 1000).toFixed(1)
+  const convertorKm = (distance: any) => {
+    const result = (distance / 1000).toFixed(1)
     return result
   }
 
@@ -49,7 +48,7 @@ const SounterList: React.FC<ISouterProps> = observer(({ item }) => {
         <h2 className={styles.title}>{item.title}</h2>
         <p className={styles.text}>{item.shortDescription}</p>
       </div>
-      <p className={styles.distance}>{convertor(item.distance)} km</p>
+      <p className={styles.distance}>{convertorKm(item.distance)} km</p>
       <button type="button" className={styles.buttonGetDirections}>
         <FontAwesomeIcon icon={faArrowRight} color="grey" size="1x" />
       </button>

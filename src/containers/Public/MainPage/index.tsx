@@ -1,5 +1,4 @@
-import * as React from 'react'
-import styles from './styles.module.scss'
+import React from 'react'
 import Header from 'components/Header'
 import MapPage from '../MapPage'
 

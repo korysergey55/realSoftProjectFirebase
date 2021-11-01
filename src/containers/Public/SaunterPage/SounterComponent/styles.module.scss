@@ -28,8 +28,14 @@
     max-width: 525px;
     height: 700px;
     max-height: 700px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+
+    .icon {
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      margin-top: 50px;
+      color: rgb(100, 196, 240);
+    }
 
     .pathContainer {
       padding: 0 15px;

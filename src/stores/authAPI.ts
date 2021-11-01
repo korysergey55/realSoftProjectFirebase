@@ -1,14 +1,14 @@
 import axios from 'axios'
-import { api } from './../utils/api'
+// import { api } from './../utils/api'
 import {
   makeAutoObservable,
   observable,
   action,
   // configure,
   // computed,
-  reaction,
   // runInAction,
-  toJS,
+  // reaction,
+  // toJS,
 } from 'mobx'
 
 class AuthAPI {
@@ -17,10 +17,10 @@ class AuthAPI {
 
   constructor() {
     makeAutoObservable(this)
-    reaction(
-      () => this.accessToken,
-      _ => console.log(toJS(this.accessToken))
-    )
+    // reaction(
+    //   () => this.accessToken,
+    //   _ => console.log(toJS(this.accessToken))
+    // )
   }
   @action.bound setAuthAPI(authData: any) {
     this.auth = authData

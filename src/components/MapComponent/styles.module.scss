@@ -10,18 +10,18 @@
     top: 60px;
     left: 180px;
     z-index: 50;
-    width: 220px;
+    min-width: 220px;
     height: 40px;
     border-radius: 7px;
     font-size: 20px;
     font-weight: 500;
     border: 1px solid grey;
-    background-color: white;
+    color: white;
+    background-color: #1fa2fa;
     transition: background-color 350ms cubic-bezier(0.4, 0, 0.2, 1);
 
     &:hover {
       cursor: pointer;
-      background-color: greenyellow;
     }
 
     .btnIcon {

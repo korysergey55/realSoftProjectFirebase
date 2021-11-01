@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import styles from './styles.module.scss'
-import MapComponent from 'components/MapComponent'
-import Filter from '../Filter'
-import SounterList from '../SounterList'
+import React from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
+import styles from './styles.module.scss'
+import Filter from '../Filter'
+import SounterList from '../SounterList'
+import MapComponent from 'components/MapComponent'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
 
 const SounterComponent = observer(() => {
   const { sounterStore } = useStore()
   const { item, filteredUserPath } = sounterStore
 
-  useEffect(() => {}, [sounterStore])
-
   const addToFavorites = () => {
     sounterStore.setFavorite()
   }
-  const removePath = (id: any) => {
+  const removePath = (id: string) => {
     sounterStore.removeUserPath(id)
     sounterStore.setItem(null)
   }
-  const convertor = (item: any) => {
-    const result = (item / 1000).toFixed(1)
+  const convertorKm = (distance: number) => {
+    const result = (distance / 1000).toFixed(1)
     return result
   }
 
-  // filteredUserPath
   return (
     <div className={styles.container}>
       <div className={styles.leftSide}>
@@ -45,11 +44,13 @@ const SounterComponent = observer(() => {
             <div className={styles.pathContainer}>
               <div className={styles.pathWripper}>
                 <h2 className={styles.title}>{item.title}</h2>
-                <p className={styles.distance}>{convertor(item.distance)} km</p>
+                <p className={styles.distance}>
+                  {convertorKm(item.distance)} km
+                </p>
               </div>
               <p className={styles.text}>{item.shortDescription}</p>
             </div>
-            <MapComponent key={item.id} pathMarkers={item.markersArr} />
+            <MapComponent key={item.id} />
             <button
               className={styles.buttonAddToFavorites}
               type="button"
@@ -66,9 +67,15 @@ const SounterComponent = observer(() => {
             </button>
           </>
         ) : (
-          <h2 className={styles.notPathYet}>
-            Add Path to see Map and Directions!
-          </h2>
+          <>
+            <FontAwesomeIcon
+              icon={faArrowsAlt}
+              color="grey"
+              size="10x"
+              className={styles.icon}
+            />
+            <h2 className={styles.notPathYet}>Select any path!</h2>
+          </>
         )}
       </div>
     </div>

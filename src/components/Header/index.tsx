@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useStore } from 'stores'
+import { observer } from 'mobx-react'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons'
-import { useStore } from 'stores'
-import { observer } from 'mobx-react'
-import { toJS } from 'mobx'
 import { signInWithGoogle, signInWithFacebook, logout } from 'utils/firebase'
 import { useHistory } from 'react-router'
+// import { toJS } from 'mobx'
 
 const Header = observer(() => {
   const { authAPI } = useStore()
@@ -17,7 +17,7 @@ const Header = observer(() => {
     if (authAPI.accessToken) {
       history.push('/sounter')
     }
-  }, [authAPI.accessToken])
+  }, [authAPI.accessToken, history])
 
   const loginAuth = async (e: any) => {
     if (e.currentTarget.name === 'google') {
@@ -29,7 +29,6 @@ const Header = observer(() => {
       const res: any = await signInWithFacebook()
       authAPI.setAccessTokenAPI(res)
       authAPI.setAuthAPI(res)
-      // console.log(res)
     }
   }
   const logoutAuth = () => {

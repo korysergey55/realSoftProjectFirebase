@@ -1,30 +1,15 @@
 import React, { useEffect, useState } from 'react'
+// import IList from 'models/index'
+import { useStore } from 'stores'
+import { observer } from 'mobx-react'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkedAlt, faCheck } from '@fortawesome/free-solid-svg-icons'
-import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-import { useStore } from 'stores'
-import { Form, Input, Button, Row } from 'antd'
-import { observer } from 'mobx-react'
-import { toJS } from 'mobx'
 import MapComponent from 'components/MapComponent/index'
-const { v4: uuidv4 } = require('uuid')
+import { Form, Input, Button, Row } from 'antd'
+import { toJS } from 'mobx'
 
-// const initialInputState = {
-//   title: '',
-//   shortDescription: '',
-//   fullDescription: '',
-//   id: null,
-// }
-// const initialPathState = {
-//   title: '',
-//   shortDescription: '',
-//   fullDescription: '',
-//   id: null,
-//   distance: 0,
-//   favorite: false,
-//   markersArr: null,
-// }
+const { v4: uuidv4 } = require('uuid')
 const maxLength = 160
 
 const PathFormComponent = observer(() => {
@@ -59,31 +44,59 @@ const PathFormComponent = observer(() => {
     addUserPathtoStore()
   }, [inputValue, distance, userArrMarkers])
 
+  // useEffect(() => {}, [sounterStore.item])
+
   const onChangeInput = (e: any) => {
     const { name, value } = e.target
     setInputValue((prev: any) => ({ ...prev, [name]: value }))
   }
-  const onFinish = () => {
-    sounterStore.setUserPath(completedPath)
+  const getResetForm = () => {
+    setInputValue({
+      title: '',
+      shortDescription: '',
+      fullDescription: '',
+      id: null,
+    })
+    sounterStore.setDistance(0)
+    sounterStore.setItem(null)
     sounterStore.setModal()
   }
+  const onFinish = () => {
+    sounterStore.setUserPath(completedPath)
+    getResetForm()
+  }
 
-  const convertor = (item: any) => {
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo)
+  }
+
+  const convertorKm = (item: number) => {
     const result = (item / 1000).toFixed(1)
     return result
   }
+
   return (
     <>
       <div className={styles.container}>
         <div className={styles.leftSide}>
-          <Form name="pathForm" onFinish={onFinish}>
-            <Form.Item label="Title" className={styles.label}></Form.Item>
+          <Form
+            name="pathForm"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+          >
+            <Form.Item
+              label="Title"
+              name="title"
+              className={styles.label}
+              // rules={[{ required: true, message: 'Please enter title' }]}
+            ></Form.Item>
             <Input
               name="title"
               value={inputValue.title}
               placeholder="Text input"
               className={styles.input}
               onChange={onChangeInput}
+              minLength={5}
             />
             <Form.Item
               label="Short description"
@@ -115,7 +128,7 @@ const PathFormComponent = observer(() => {
             <div className={styles.lengthContainer}>
               <FontAwesomeIcon icon={faMapMarkedAlt} color="grey" size="2x" />
               <p className={styles.length}>
-                Length {convertor(sounterStore.distance)} km
+                Length {convertorKm(sounterStore.distance)} km
               </p>
             </div>
             <Form.Item>
@@ -126,7 +139,7 @@ const PathFormComponent = observer(() => {
               >
                 <FontAwesomeIcon
                   icon={faCheck}
-                  color="grey"
+                  color="white"
                   size="1x"
                   className={styles.btnIcon}
                 />
@@ -136,7 +149,7 @@ const PathFormComponent = observer(() => {
           </Form>
         </div>
         <div className={styles.rigthSide}>
-          <MapComponent button={true} click={true} />
+          <MapComponent button={true} click={true} currentPos={true} />
         </div>
       </div>
     </>
