@@ -23,11 +23,13 @@
         font-size: 30px;
         font-weight: 700;
         color: rgb(0, 110, 255);
-      }
-      .subtitle {
-        font-weight: 600;
-        display: inline-block;
-        margin-bottom: 0;
+        .subtitle {
+          display: inline-block;
+          margin-bottom: 0;
+          font-size: 15px;
+          font-weight: 600;
+          color: black;
+        }
       }
     }
 

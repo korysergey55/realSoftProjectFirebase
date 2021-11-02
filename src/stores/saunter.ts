@@ -16,7 +16,9 @@ class SounterStore {
   @observable distance: number = 0
   @observable userArrMarkers: any = null
   @observable userPath: any[] = []
-  @observable filteredUserPath: any[] = []
+  @observable filteredUserPath: any[] = localStorage.getItem('userPath')
+    ? JSON.parse(localStorage.getItem('userPath') as string)
+    : []
 
   constructor() {
     makeAutoObservable(this)
@@ -38,8 +40,24 @@ class SounterStore {
     this.userArrMarkers = markerArr
   }
   @action setUserPath(data: any) {
-    this.filteredUserPath = [...this.userPath, data]
-    this.userPath = [...this.userPath, data]
+    this.filteredUserPath = [...data]
+    this.userPath = [...data]
+    localStorage.setItem('userPath', JSON.stringify(this.userPath))
+  }
+  @action addUserPath(data: any) {
+    this.setUserPath([...this.userPath, data])
+    // this.filteredUserPath = [...this.userPath, data]
+    // this.userPath = [...this.userPath, data]
+    // localStorage.setItem('userPath', JSON.stringify(this.userPath))
+  }
+  @action removeUserPath(data: string) {
+    const remuved = this.filteredUserPath.filter(item => item.id !== data)
+    this.setUserPath(remuved)
+    // this.filteredUserPath = remuved
+    // localStorage.setItem('userPath', JSON.stringify(remuved))
+  }
+  @action setFavorite() {
+    this.item.favorite = !this.item.favorite
   }
   @action getFilterUserPath(data: any) {
     const formatData = data.toLowerCase().trim()
@@ -47,13 +65,6 @@ class SounterStore {
       path.title.toLowerCase().includes(formatData)
     )
     this.filteredUserPath = filtered
-  }
-  @action removeUserPath(data: string) {
-    const remuve = this.filteredUserPath.filter(item => item.id !== data)
-    this.filteredUserPath = remuve
-  }
-  @action setFavorite() {
-    this.item.favorite = !this.item.favorite
   }
 }
 

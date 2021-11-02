@@ -32,7 +32,7 @@ const PathFormComponent = observer(() => {
   })
 
   useEffect(() => {
-    const addUserPathtoStore = () => {
+    const createCompletedPath = () => {
       const completedObject = {
         ...inputValue,
         id: uuidv4(),
@@ -41,10 +41,8 @@ const PathFormComponent = observer(() => {
       }
       setCompletedPath(completedObject)
     }
-    addUserPathtoStore()
+    createCompletedPath()
   }, [inputValue, distance, userArrMarkers])
-
-  // useEffect(() => {}, [sounterStore.item])
 
   const onChangeInput = (e: any) => {
     const { name, value } = e.target
@@ -62,7 +60,7 @@ const PathFormComponent = observer(() => {
     sounterStore.setModal()
   }
   const onFinish = () => {
-    sounterStore.setUserPath(completedPath)
+    sounterStore.addUserPath(completedPath)
     getResetForm()
   }
 

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons'
 import { signInWithGoogle, signInWithFacebook, logout } from 'utils/firebase'
 import { useHistory } from 'react-router'
@@ -28,7 +28,6 @@ const Header = observer(() => {
     }
   }
   const logoutAuth = () => {
-    console.log('logout')
     logout()
     authAPI.setAccessTokenAPI(null)
     localStorage.setItem('accessToken', JSON.stringify(''))
@@ -39,8 +38,9 @@ const Header = observer(() => {
         <div className={styles.container}>
           <ul className={styles.list}>
             <li className={styles.itemTitle}>
-              <h2 className={styles.title}>Sounter</h2>
-              <p className={styles.subtitle}> create own routes</p>
+              <a className={styles.title} href="/sounter">
+                Sounter <p className={styles.subtitle}> create own routes</p>
+              </a>
             </li>
             {!authAPI.accessToken ? (
               <>
@@ -81,7 +81,11 @@ const Header = observer(() => {
                   name="facebook"
                   onClick={logoutAuth}
                 >
-                  <FontAwesomeIcon icon={faCoffee} color="white" size="2x" />
+                  <FontAwesomeIcon
+                    icon={faSignOutAlt}
+                    color="white"
+                    size="2x"
+                  />
                 </button>
               </li>
             ) : null}

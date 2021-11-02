@@ -70,7 +70,7 @@ const SounterComponent = observer(() => {
           <>
             <FontAwesomeIcon
               icon={faArrowsAlt}
-              color="grey"
+              color="rgb(31, 162, 250)"
               size="10x"
               className={styles.icon}
             />
