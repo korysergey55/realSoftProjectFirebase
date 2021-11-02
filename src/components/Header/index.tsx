@@ -3,9 +3,14 @@ import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faSignOutAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons'
-import { signInWithGoogle, signInWithFacebook, logout } from 'utils/firebase'
+import {
+  signInWithGoogle,
+  signInWithFacebook,
+  logout,
+  signInWithEmailAndPassword,
+} from 'utils/firebase'
 import { useHistory } from 'react-router'
 // import { toJS } from 'mobx'
 
@@ -17,20 +22,22 @@ const Header = observer(() => {
     if (e.currentTarget.name === 'google') {
       const res: any = await signInWithGoogle()
       authAPI.setAccessTokenAPI(res.accessToken)
-      localStorage.setItem('accessToken', JSON.stringify(res.accessToken))
       history.push('/sounter')
     }
     if (e.currentTarget.name === 'facebook') {
       const res: any = await signInWithFacebook()
       authAPI.setAccessTokenAPI(res)
-      localStorage.setItem('accessToken', JSON.stringify(res.accessToken))
       history.push('/sounter')
+    }
+    {
+      // const res: any = await signInWithEmailAndPassword()
+      // authAPI.setAccessTokenAPI(res)
+      // history.push('/sounter')
     }
   }
   const logoutAuth = () => {
     logout()
     authAPI.setAccessTokenAPI(null)
-    localStorage.setItem('accessToken', JSON.stringify(''))
   }
   return (
     <>
@@ -45,7 +52,7 @@ const Header = observer(() => {
             {!authAPI.accessToken ? (
               <>
                 <li className={styles.item}>
-                  <p className={styles.text}>Logit with Google</p>
+                  <p className={styles.text}>Login with:</p>
                   <button
                     className={styles.loginBtn}
                     type="button"
@@ -56,7 +63,7 @@ const Header = observer(() => {
                   </button>
                 </li>
                 <li className={styles.item}>
-                  <p className={styles.text}>Logit with Facebook</p>
+                  <p className={styles.text}></p>
                   <button
                     className={styles.loginBtn}
                     type="button"
@@ -65,6 +72,23 @@ const Header = observer(() => {
                   >
                     <FontAwesomeIcon
                       icon={faFacebookF}
+                      color="white"
+                      size="2x"
+                    />
+                  </button>
+                </li>
+                <li className={styles.item}>
+                  <p className={styles.text}></p>
+                  <button
+                    className={styles.loginBtn}
+                    type="button"
+                    name="email"
+                    onClick={() => {
+                      history.push('/registration')
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faEnvelope}
                       color="white"
                       size="2x"
                     />

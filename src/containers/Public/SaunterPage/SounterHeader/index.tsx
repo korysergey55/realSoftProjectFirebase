@@ -19,10 +19,14 @@ const SounterHeader = observer(() => {
       <ModalComponent visible={sounterStore.modal}>
         <PathFormComponent />
       </ModalComponent>
-      <div>
-        <FontAwesomeIcon icon={faArrowsAlt} color="grey" size="2x" />
+      <a href="/">
+        <FontAwesomeIcon
+          icon={faArrowsAlt}
+          color=" rgb(0, 110, 255)"
+          size="2x"
+        />
         <h2 className={styles.title}>Sounter</h2>
-      </div>
+      </a>
       <button type="button" className={styles.buttonAddPath} onClick={addPath}>
         AddPath
       </button>

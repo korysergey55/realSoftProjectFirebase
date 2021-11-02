@@ -24,44 +24,45 @@ class AuthAPI {
     //   _ => console.log(toJS(this.accessToken))
     // )
   }
-  @action.bound setAuthAPI(authData: any) {
-    this.auth = authData
-  }
   @action.bound setAccessTokenAPI(tokenData: any) {
     this.accessToken = tokenData
+    localStorage.setItem('accessToken', JSON.stringify(tokenData))
   }
 
-  @action async fetchAuthGoogleAPI(authData: any) {
-    const BASE_URL =
-      'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/'
-    try {
-      const response = await axios.post(`${BASE_URL}`, { ...authData })
-      this.setAuthAPI(response)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  @action async fetchAuthFacebookAPI(authData: any) {
-    const BASE_URL =
-      'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/'
-    try {
-      const response = await axios.post(`${BASE_URL}`, { ...authData })
-      this.setAuthAPI(response)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // @action.bound setAuthAPI(authData: any) {
+  //   this.auth = authData
+  // }
+  // @action async fetchAuthGoogleAPI(authData: any) {
+  //   const BASE_URL =
+  //     'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/'
+  //   try {
+  //     const response = await axios.post(`${BASE_URL}`, { ...authData })
+  //     this.setAuthAPI(response)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+  // @action async fetchAuthFacebookAPI(authData: any) {
+  //   const BASE_URL =
+  //     'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/'
+  //   try {
+  //     const response = await axios.post(`${BASE_URL}`, { ...authData })
+  //     this.setAuthAPI(response)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
-  @action async fetchTokenAPI(tokenData: any) {
-    const BASE_URL =
-      'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/'
-    try {
-      const response = await axios.post(`${BASE_URL}`, { ...tokenData })
-      this.setAccessTokenAPI(response)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // @action async fetchTokenAPI(tokenData: any) {
+  //   const BASE_URL =
+  //     'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/'
+  //   try {
+  //     const response = await axios.post(`${BASE_URL}`, { ...tokenData })
+  //     this.setAccessTokenAPI(response)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 }
 
 export default new AuthAPI()

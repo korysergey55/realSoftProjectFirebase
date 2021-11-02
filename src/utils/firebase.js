@@ -9,6 +9,7 @@ let config = {
 }
 const app = firebase.initializeApp(config)
 const auth = app.auth()
+const db = app.firestore()
 auth.languageCode = 'en'
 const googleProvider = new firebase.auth.GoogleAuthProvider()
 const facebookProvider = new firebase.auth.FacebookAuthProvider()
@@ -34,6 +35,16 @@ const signInWithFacebook = async () => {
     alert(err.message)
   }
 }
+const signInWithEmailAndPassword = async (email, password) => {
+  try {
+    const res = await auth.signInWithEmailAndPassword(email, password)
+    // console.log(res)
+    return res
+  } catch (err) {
+    console.error(err)
+    alert(err.message)
+  }
+}
 const logout = () => {
   auth.signOut()
 }
@@ -47,9 +58,18 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       authProvider: 'local',
       email,
     })
+    return res
   } catch (err) {
     console.error(err)
     alert(err.message)
   }
 }
-export { auth, signInWithGoogle, logout, signInWithFacebook }
+export {
+  auth,
+  db,
+  signInWithGoogle,
+  logout,
+  signInWithFacebook,
+  signInWithEmailAndPassword,
+  registerWithEmailAndPassword,
+}

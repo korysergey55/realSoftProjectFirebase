@@ -6,9 +6,9 @@ import history from 'utils/history'
 import PrivateRoute from 'components/PrivateRoute'
 import Loader from 'components/Loader'
 
-// import MainPage from 'containers/Public/MainPage'
-// import SaunterPage from 'containers/Public/SaunterPage'
-
+const RegistrationPage = lazy(
+  () => import('containers/Public/RegistrationPage')
+)
 const MainPage = lazy(() => import('containers/Public/MainPage'))
 const SaunterPage = lazy(() => import('containers/Public/SaunterPage'))
 
@@ -20,6 +20,7 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={MainPage} />
             <PrivateRoute exact path="/sounter" component={SaunterPage} />
+            <Route exact path="/registration" component={RegistrationPage} />
             {/* <Route exact path="/sounter" component={SaunterPage} /> */}
           </Switch>
         </Suspense>
