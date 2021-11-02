@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/realSoftProjectFirebase/precache-manifest.039f4b620a008dbb0101522e8617ab9a.js"
+  "/realSoftProjectFirebase/precache-manifest.04c3407a750e23219faea0678b844f67.js"
 );
 
 self.addEventListener('message', (event) => {
