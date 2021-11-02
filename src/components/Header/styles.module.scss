@@ -2,19 +2,40 @@
   display: block;
   max-width: 1112px;
   margin: 0 auto;
+  margin-bottom: 0;
   padding: 30px 15px;
 
   .list {
     display: flex;
     justify-content: right;
     align-items: center;
+    margin-bottom: 0;
+    list-style: none;
+
+    .itemTitle {
+      display: block;
+      margin-left: 0;
+      margin-right: auto;
+
+      .title {
+        display: block;
+        margin-bottom: 0;
+        font-size: 30px;
+        font-weight: 700;
+        color: rgb(0, 110, 255);
+      }
+      .subtitle {
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 0;
+      }
+    }
 
     .item {
       display: flex;
       justify-content: center;
       align-items: center;
       margin-right: 20px;
-      list-style: none;
 
       .text {
         display: block;

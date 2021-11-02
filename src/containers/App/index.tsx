@@ -1,26 +1,31 @@
-import React, { Component } from 'react'
+import React, { Suspense, lazy } from 'react'
 import { Router, Switch, Route } from 'react-router'
 import { Provider } from 'mobx-react'
 import store from 'stores'
 import history from 'utils/history'
-import MainPage from 'containers/Public/MainPage'
-import SaunterPage from 'containers/Public/SaunterPage'
-// import AppLoading from 'components/AppLoading'
+import PrivateRoute from 'components/PrivateRoute'
+import Loader from 'components/Loader'
 
-class App extends Component {
-  render = (): JSX.Element => {
-    return (
-      <Provider {...store}>
-        <Router history={history}>
+// import MainPage from 'containers/Public/MainPage'
+// import SaunterPage from 'containers/Public/SaunterPage'
+
+const MainPage = lazy(() => import('containers/Public/MainPage'))
+const SaunterPage = lazy(() => import('containers/Public/SaunterPage'))
+
+const App = () => {
+  return (
+    <Provider {...store}>
+      <Router history={history}>
+        <Suspense fallback={<Loader />}>
           <Switch>
             <Route exact path="/" component={MainPage} />
-            <Route exact path="/sounter" component={SaunterPage} />
+            <PrivateRoute exact path="/sounter" component={SaunterPage} />
+            {/* <Route exact path="/sounter" component={SaunterPage} /> */}
           </Switch>
-        </Router>
-        {/* <AppLoading /> */}
-      </Provider>
-    )
-  }
+        </Suspense>
+      </Router>
+    </Provider>
+  )
 }
 
 export default App

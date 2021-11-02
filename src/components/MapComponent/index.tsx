@@ -56,9 +56,9 @@ const MapComponent: React.FC<IMap> = observer(
     useEffect(() => {
       const isMarkers = () => {
         if (sounterStore.item) {
-          const isMarkers = sounterStore.item.markersArr
-          setMarker(isMarkers)
-        }
+          const markerArr = sounterStore.item.markersArr
+          setMarker(markerArr)
+        } else setMarker([])
       }
       isMarkers()
     }, [sounterStore.item])
@@ -67,13 +67,13 @@ const MapComponent: React.FC<IMap> = observer(
       click && setMarker([])
     }, [sounterStore.item])
 
-    // useEffect(() => {
-    //   positions &&
-    //     setCurrentPosition({
-    //       lat: positions?.latitude,
-    //       lng: positions?.longitude,
-    //     })
-    // }, [positions])
+    useEffect(() => {
+      positions &&
+        setCurrentPosition({
+          lat: positions?.latitude,
+          lng: positions?.longitude,
+        })
+    }, [positions])
 
     useEffect(() => {
       if (marker && marker.length > 1) {
@@ -203,14 +203,14 @@ const MapComponent: React.FC<IMap> = observer(
               size="1x"
               className={styles.btnIcon}
             />
-            Add corrent position
+            Add current position
           </button>
         )}
         <div className={styles.containerStyle}>
           {isLoaded ? (
             <GoogleMap
               mapContainerStyle={containerStyle}
-              center={currentPosition ? currentPosition : false}
+              center={currentPosition}
               zoom={100}
               onLoad={onLoad}
               onUnmount={onUnmount}
@@ -220,7 +220,7 @@ const MapComponent: React.FC<IMap> = observer(
                 <Marker
                   label="currentPosition"
                   position={currentPosition}
-                  // draggable={true}
+                  draggable={false}
                 ></Marker>
               )}
               {marker && (

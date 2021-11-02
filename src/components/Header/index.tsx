@@ -13,34 +13,35 @@ const Header = observer(() => {
   const { authAPI } = useStore()
   const history = useHistory()
 
-  useEffect(() => {
-    if (authAPI.accessToken) {
-      history.push('/sounter')
-    }
-  }, [authAPI.accessToken, history])
-
   const loginAuth = async (e: any) => {
     if (e.currentTarget.name === 'google') {
       const res: any = await signInWithGoogle()
       authAPI.setAccessTokenAPI(res.accessToken)
-      authAPI.setAuthAPI(res)
+      localStorage.setItem('accessToken', JSON.stringify(res.accessToken))
+      history.push('/sounter')
     }
     if (e.currentTarget.name === 'facebook') {
       const res: any = await signInWithFacebook()
       authAPI.setAccessTokenAPI(res)
-      authAPI.setAuthAPI(res)
+      localStorage.setItem('accessToken', JSON.stringify(res.accessToken))
+      history.push('/sounter')
     }
   }
   const logoutAuth = () => {
     console.log('logout')
     logout()
     authAPI.setAccessTokenAPI(null)
+    localStorage.setItem('accessToken', JSON.stringify(''))
   }
   return (
     <>
       <header className={styles.header}>
         <div className={styles.container}>
           <ul className={styles.list}>
+            <li className={styles.itemTitle}>
+              <h2 className={styles.title}>Sounter</h2>
+              <p className={styles.subtitle}> create own routes</p>
+            </li>
             {!authAPI.accessToken ? (
               <>
                 <li className={styles.item}>

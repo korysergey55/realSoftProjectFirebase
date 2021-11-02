@@ -13,7 +13,9 @@ import {
 
 class AuthAPI {
   @observable auth: any = null
-  @observable accessToken: any = null
+  @observable accessToken: string = localStorage.getItem('accessToken')
+    ? JSON.parse(localStorage.getItem('accessToken') as string)
+    : null
 
   constructor() {
     makeAutoObservable(this)

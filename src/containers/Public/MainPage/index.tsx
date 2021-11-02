@@ -1,12 +1,12 @@
 import React from 'react'
 import Header from 'components/Header'
-import MapPage from '../MapPage'
+import MapComponent from 'components/MapComponent'
 
 const MainPage = () => {
   return (
     <>
       <Header />
-      <MapPage />
+      <MapComponent />
     </>
   )
 }
