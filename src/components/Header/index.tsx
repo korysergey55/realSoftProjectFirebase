@@ -1,17 +1,12 @@
 import React from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
+import { useHistory } from 'react-router'
+import { signInWithGoogle, signInWithFacebook, logout } from 'utils/Firebase'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons'
-import {
-  signInWithGoogle,
-  signInWithFacebook,
-  logout,
-  signInWithEmailAndPassword,
-} from 'utils/firebase'
-import { useHistory } from 'react-router'
 // import { toJS } from 'mobx'
 
 const Header = observer(() => {
@@ -28,11 +23,6 @@ const Header = observer(() => {
       const res: any = await signInWithFacebook()
       authAPI.setAccessTokenAPI(res)
       history.push('/sounter')
-    }
-    {
-      // const res: any = await signInWithEmailAndPassword()
-      // authAPI.setAccessTokenAPI(res)
-      // history.push('/sounter')
     }
   }
   const logoutAuth = () => {

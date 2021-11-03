@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
 import ModalComponent from 'containers/Public/Modal/modal'
 import PathFormComponent from 'containers/Public/PathFormComponent'
-import { toJS } from 'mobx'
+// import { toJS } from 'mobx'
 
 const SounterHeader = observer(() => {
   const { sounterStore } = useStore()
@@ -19,7 +19,7 @@ const SounterHeader = observer(() => {
       <ModalComponent visible={sounterStore.modal}>
         <PathFormComponent />
       </ModalComponent>
-      <a href="/">
+      <a href="/home">
         <FontAwesomeIcon
           icon={faArrowsAlt}
           color=" rgb(0, 110, 255)"

@@ -45,7 +45,6 @@ const useGeoPosition = () => {
           })
       )
     }
-
     return () => {
       navigator.geolocation.clearWatch(clearPosition)
     }

@@ -6,11 +6,12 @@ import history from 'utils/history'
 import PrivateRoute from 'components/PrivateRoute'
 import Loader from 'components/Loader'
 
+const MainPage = lazy(() => import('containers/Public/MainPage'))
+const SaunterPage = lazy(() => import('containers/Public/SaunterPage'))
 const RegistrationPage = lazy(
   () => import('containers/Public/RegistrationPage')
 )
-const MainPage = lazy(() => import('containers/Public/MainPage'))
-const SaunterPage = lazy(() => import('containers/Public/SaunterPage'))
+const PrintInputPage = lazy(() => import('containers/Public/PrintInputPage'))
 
 const App = () => {
   return (
@@ -18,10 +19,10 @@ const App = () => {
       <Router history={history}>
         <Suspense fallback={<Loader />}>
           <Switch>
-            <Route exact path="/" component={MainPage} />
             <PrivateRoute exact path="/sounter" component={SaunterPage} />
+            <Route exact path="/home" component={MainPage} />
             <Route exact path="/registration" component={RegistrationPage} />
-            {/* <Route exact path="/sounter" component={SaunterPage} /> */}
+            <Route exact path="/print" component={PrintInputPage} />
           </Switch>
         </Suspense>
       </Router>

@@ -1,5 +1,4 @@
-import axios from 'axios'
-// import { api } from './../utils/api'
+// import axios from 'axios'
 import {
   makeAutoObservable,
   observable,

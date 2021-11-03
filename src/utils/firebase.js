@@ -1,13 +1,20 @@
 import firebase from 'firebase'
 
-let config = {
-  apiKey: 'AIzaSyDwpUrScZfWnJtvC1bA3j1iF14-ZE-ff-U',
-  authDomain: 'realsoftproject-5d44c.firebaseapp.com',
-  databaseURL: 'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/',
-  projectId: 'realsoftproject-5d44c',
-  OAuth: 'https://realsoftproject-5d44c.firebaseapp.com/__/auth/handler',
+let configKorySergey = {
+  apiKey: process.env.REACT_APP_WEB_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  OAuth: process.env.REACT_APP_OAUTH,
 }
-const app = firebase.initializeApp(config)
+// let configRealSoft = {
+//   apiKey: 'AIzaSyDwpUrScZfWnJtvC1bA3j1iF14-ZE-ff-U',
+//   authDomain: 'realsoftproject-5d44c.firebaseapp.com',
+//   databaseURL: 'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/',
+//   projectId: 'realsoftproject-5d44c',
+//   OAuth: 'https://realsoftproject-5d44c.firebaseapp.com/__/auth/handler',
+// }
+const app = firebase.initializeApp(configKorySergey)
 const auth = app.auth()
 const db = app.firestore()
 auth.languageCode = 'en'

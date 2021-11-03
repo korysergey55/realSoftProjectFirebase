@@ -2,9 +2,6 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
-import styles from './styles.module.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import {
   GoogleMap,
   useJsApiLoader,
@@ -13,7 +10,10 @@ import {
   DistanceMatrixService,
   Marker,
 } from '@react-google-maps/api'
-import useGeoPosition from 'components/CurrentGeoposition/index'
+import styles from './styles.module.scss'
+import useGeoPosition from 'utils/CurrentGeoposition/index'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 // import { toJS } from 'mobx'
 
 const containerStyle = {

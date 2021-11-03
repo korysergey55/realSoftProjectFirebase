@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import styles from './styles.module.scss'
-import { Form, Input, Button, Checkbox } from 'antd'
 import { useStore } from 'stores'
+import { useHistory } from 'react-router'
 import {
   signInWithEmailAndPassword,
   registerWithEmailAndPassword,
-} from 'utils/firebase'
-import { toJS } from 'mobx'
-import { useHistory } from 'react-router'
+} from 'utils/Firebase'
+import { Form, Input, Button, Checkbox } from 'antd'
+import styles from './styles.module.scss'
+// import { toJS } from 'mobx'
 
 const RegistrationPage = () => {
   const { authAPI } = useStore()
   const history = useHistory()
-  const [ligin, setLogin] = useState<boolean>(false)
-  const [registration, setRegistration] = useState<boolean>(false)
-  const [userForm, setUserForm] = useState<any>({
+  const [login, setLogin] = useState<boolean>(false)
+  const [formData, setFormData] = useState<any>({
+    name: '',
+    email: '',
+    password: '',
+  })
+  const [completedForm, setCompletedForm] = useState<any>({
     name: '',
     email: '',
     password: '',
@@ -22,10 +26,10 @@ const RegistrationPage = () => {
 
   useEffect(() => {
     const setUser = async () => {
-      if (ligin) {
+      if (login) {
         const res: any = await signInWithEmailAndPassword(
-          userForm.email,
-          userForm.password
+          completedForm.email,
+          completedForm.password
         )
         if (res) {
           authAPI.setAccessTokenAPI(res)
@@ -33,9 +37,9 @@ const RegistrationPage = () => {
         }
       } else {
         const res: any = await registerWithEmailAndPassword(
-          userForm.name,
-          userForm.email,
-          userForm.password
+          completedForm.name,
+          completedForm.email,
+          completedForm.password
         )
         if (res) {
           console.log('res-registerWithEmailAndPassword', res)
@@ -43,22 +47,22 @@ const RegistrationPage = () => {
       }
     }
     setUser()
-  }, [userForm])
+  }, [completedForm])
 
-  const onFinish = (values: any) => {
-    const name = values.name
-    const email = values.email
-    const password = values.password
-    setUserForm({ name, email, password })
+  const onChange = (evt: any) => {
+    const { value, name } = evt.target
+    setFormData((prev: any) => ({ ...prev, [name]: value }))
   }
-  console.log('userForm', toJS(userForm))
-
+  const onFinish = (values: any) => {
+    // const { name, email, password } = values
+    setCompletedForm(formData)
+  }
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
   }
   return (
     <div className={styles.container}>
-      <a className={styles.title} href="/">
+      <a className={styles.title} href="/home">
         Sounter <p className={styles.subtitle}> create own routes</p>
       </a>
       <div className={styles.formContainer}>
@@ -85,13 +89,13 @@ const RegistrationPage = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          {!ligin && (
+          {!login && (
             <Form.Item
               label="Name"
               name="name"
               rules={[{ required: true, message: 'Please input your Name!' }]}
             >
-              <Input />
+              <Input name="name" value={formData.name} onChange={onChange} />
             </Form.Item>
           )}
           <Form.Item
@@ -99,7 +103,7 @@ const RegistrationPage = () => {
             name="email"
             rules={[{ required: true, message: 'Please input your email!' }]}
           >
-            <Input />
+            <Input name="email" value={formData.email} onChange={onChange} />
           </Form.Item>
 
           <Form.Item
@@ -107,7 +111,11 @@ const RegistrationPage = () => {
             name="password"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password />
+            <Input.Password
+              name="password"
+              value={formData.password}
+              onChange={onChange}
+            />
           </Form.Item>
 
           <Form.Item

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import SounterHeader from './SounterHeader'
 import SounterComponent from './SounterComponent'
 import { observer } from 'mobx-react'
