@@ -1,7 +1,7 @@
 import React from 'react'
-import IList from 'models/index'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
+import IList from 'models/index'
 import styles from './styles.module.scss'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

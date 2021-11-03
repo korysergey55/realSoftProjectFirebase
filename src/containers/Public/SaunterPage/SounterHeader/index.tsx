@@ -1,11 +1,11 @@
 import React from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
+import ModalComponent from 'containers/Public/Modal/modal'
+import PathFormComponent from 'containers/Public/SaunterPage/PathFormComponent'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
-import ModalComponent from 'containers/Public/Modal/modal'
-import PathFormComponent from 'containers/Public/PathFormComponent'
 // import { toJS } from 'mobx'
 
 const SounterHeader = observer(() => {

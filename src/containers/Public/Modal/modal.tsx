@@ -1,8 +1,8 @@
 import React from 'react'
-import styles from './styles.module.scss'
-import { Modal } from 'antd'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
+import { Modal } from 'antd'
+import styles from './styles.module.scss'
 
 const ModalComponent: React.FC<any> = observer(({ visible, children }: any) => {
   const { sounterStore } = useStore()

@@ -1,10 +1,10 @@
 import React from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
-import styles from './styles.module.scss'
 import Filter from '../Filter'
 import SounterList from '../SounterList'
 import MapComponent from 'components/MapComponent'
+import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
 

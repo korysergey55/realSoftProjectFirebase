@@ -16,13 +16,17 @@ const Header = observer(() => {
   const loginAuth = async (e: any) => {
     if (e.currentTarget.name === 'google') {
       const res: any = await signInWithGoogle()
-      authAPI.setAccessTokenAPI(res.accessToken)
-      history.push('/sounter')
+      if (res) {
+        authAPI.setAccessTokenAPI(res.accessToken)
+        history.push('/sounter')
+      }
     }
     if (e.currentTarget.name === 'facebook') {
       const res: any = await signInWithFacebook()
-      authAPI.setAccessTokenAPI(res)
-      history.push('/sounter')
+      if (res) {
+        authAPI.setAccessTokenAPI(res)
+        history.push('/sounter')
+      }
     }
   }
   const logoutAuth = () => {

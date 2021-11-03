@@ -2,15 +2,15 @@ import {
   makeAutoObservable,
   observable,
   action,
-  reaction,
-  toJS,
+  // reaction,
+  // toJS,
   // configure,
   // computed,
   // runInAction,
 } from 'mobx'
 
 class InputsStore {
-  @observable inputs: any = null
+  @observable inputs: object[] = []
 
   constructor() {
     makeAutoObservable(this)
@@ -19,7 +19,7 @@ class InputsStore {
     //   _ => console.log(toJS(this.inputs))
     // )
   }
-  @action setInputs(data: any) {
+  @action setInputs(data: object[]) {
     this.inputs = data
   }
 }

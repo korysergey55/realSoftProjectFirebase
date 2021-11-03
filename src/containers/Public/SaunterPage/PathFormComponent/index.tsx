@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-// import IList from 'models/index'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
+import { Form, Input, Button, Row } from 'antd'
+import MapComponent from 'components/MapComponent/index'
+import MapComponentMemo from 'components/MapComponentMemo'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkedAlt, faCheck } from '@fortawesome/free-solid-svg-icons'
-import MapComponent from 'components/MapComponent/index'
-import { Form, Input, Button, Row } from 'antd'
 import { toJS } from 'mobx'
 
 const { v4: uuidv4 } = require('uuid')
@@ -48,6 +48,7 @@ const PathFormComponent = observer(() => {
     const { name, value } = e.target
     setInputValue((prev: any) => ({ ...prev, [name]: value }))
   }
+
   const getResetForm = () => {
     setInputValue({
       title: '',
@@ -59,18 +60,19 @@ const PathFormComponent = observer(() => {
     sounterStore.setItem(null)
     sounterStore.setModal()
   }
+
   const onFinish = () => {
     sounterStore.addUserPath(completedPath)
     getResetForm()
   }
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
-  }
-
   const convertorKm = (item: number) => {
     const result = (item / 1000).toFixed(1)
     return result
+  }
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo)
   }
 
   return (
@@ -147,7 +149,7 @@ const PathFormComponent = observer(() => {
           </Form>
         </div>
         <div className={styles.rigthSide}>
-          <MapComponent button={true} click={true} currentPos={true} />
+          <MapComponentMemo button={true} click={true} currentPos={true} />
         </div>
       </div>
     </>

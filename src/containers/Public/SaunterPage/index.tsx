@@ -1,7 +1,7 @@
 import React from 'react'
+import { observer } from 'mobx-react'
 import SounterHeader from './SounterHeader'
 import SounterComponent from './SounterComponent'
-import { observer } from 'mobx-react'
 
 const SaunterPage = observer(() => {
   return (
