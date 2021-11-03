@@ -3,7 +3,7 @@ import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 import Filter from '../Filter'
 import SounterList from '../SounterList'
-import MapComponent from 'components/MapComponent'
+import MapComponentMemo from 'components/MapComponentMemo'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
@@ -50,7 +50,7 @@ const SounterComponent = observer(() => {
               </div>
               <p className={styles.text}>{item.shortDescription}</p>
             </div>
-            <MapComponent key={item.id} />
+            <MapComponentMemo key={item.id} />
             <button
               className={styles.buttonAddToFavorites}
               type="button"

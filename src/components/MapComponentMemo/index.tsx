@@ -1,4 +1,3 @@
-/* global google */
 import React, { useCallback, useState, useEffect, useMemo } from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
@@ -11,11 +10,11 @@ import {
   Marker,
 } from '@react-google-maps/api'
 import useGeoPosition from 'utils/CurrentGeoposition/index'
+import { Select } from 'antd'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 // import { toJS } from 'mobx'
-
 const containerStyle = {
   width: '100%',
   height: '500px',
@@ -25,6 +24,7 @@ interface IMap {
   click?: boolean
   currentPos?: boolean
 }
+const { Option } = Select
 
 const MapComponentMemo: React.FC<IMap> = observer(
   ({ button = false, click = false, currentPos = false }) => {
@@ -35,7 +35,7 @@ const MapComponentMemo: React.FC<IMap> = observer(
 
     const [marker, setMarker] = useState<any>()
     const [distanceLength, setDistanceLength] = useState<number>(0)
-    const [travelMode, setTravelMode] = useState<any>('DRIVING')
+    const [travelMode, setTravelMode] = useState<any>('WALKING')
     //Directions service
     const [origin, setOrigin] = useState<any>(null)
     const [destination, setDestination] = useState<any>(null)
@@ -65,7 +65,7 @@ const MapComponentMemo: React.FC<IMap> = observer(
         }
       }
       isMarkers()
-    }, [sounterStore.item])
+    }, [sounterStore.item, click])
 
     useEffect(() => {
       if (marker && marker.length > 1) {
@@ -188,22 +188,41 @@ const MapComponentMemo: React.FC<IMap> = observer(
       }
     }, [])
 
+    function onChange(value: any) {
+      setTravelMode(value)
+    }
+    console.log(travelMode)
+
     return (
       <div className={styles.container}>
         {button && (
-          <button
-            type="button"
-            className={styles.clearMap}
-            onClick={clearMarkers}
-          >
-            <FontAwesomeIcon
-              icon={faMapMarkerAlt}
-              color="grey"
-              size="1x"
-              className={styles.btnIcon}
-            />
-            Clear Map
-          </button>
+          <>
+            <button
+              type="button"
+              className={styles.clearMap}
+              onClick={clearMarkers}
+            >
+              <FontAwesomeIcon
+                icon={faMapMarkerAlt}
+                color="grey"
+                size="1x"
+                className={styles.btnIcon}
+              />
+              Clear Map
+            </button>
+            <Select
+              className={styles.select}
+              showSearch
+              style={{ width: 200 }}
+              placeholder="Select trevel mode"
+              optionFilterProp="children"
+              onChange={onChange}
+            >
+              <Option value="DRIVING">DRIVING</Option>
+              <Option value="WALKING">WALKING</Option>
+              {/* <Option value="BICYCLING">BICYCLING</Option> */}
+            </Select>
+          </>
         )}
         <div className={styles.containerStyle}>
           {isLoaded ? (

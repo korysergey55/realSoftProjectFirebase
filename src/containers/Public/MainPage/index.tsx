@@ -1,12 +1,12 @@
 import React from 'react'
 import Header from 'components/Header'
-import MapComponent from 'components/MapComponent'
+import MapComponentMemo from 'components/MapComponentMemo'
 
 const MainPage = () => {
   return (
     <>
       <Header />
-      <MapComponent currentPos={true} />
+      <MapComponentMemo currentPos={true} />
     </>
   )
 }

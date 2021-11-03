@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 import { Form, Input, Button, Row } from 'antd'
-import MapComponent from 'components/MapComponent/index'
+import MapComponent from 'utils/MapComponent/index'
 import MapComponentMemo from 'components/MapComponentMemo'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -86,7 +86,6 @@ const PathFormComponent = observer(() => {
           >
             <Form.Item
               label="Title"
-              name="title"
               className={styles.label}
               // rules={[{ required: true, message: 'Please enter title' }]}
             ></Form.Item>
