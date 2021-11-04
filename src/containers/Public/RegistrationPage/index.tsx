@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useStore } from 'stores'
 import { useHistory } from 'react-router'
 import {
@@ -12,75 +12,75 @@ import styles from './styles.module.scss'
 const RegistrationPage = () => {
   const { authAPI } = useStore()
   const history = useHistory()
+  const [form] = Form.useForm()
   const [login, setLogin] = useState<boolean>(false)
   const [formData, setFormData] = useState<any>({
     name: '',
     email: '',
     password: '',
   })
-  const [completedForm, setCompletedForm] = useState<any>({
-    name: '',
-    email: '',
-    password: '',
-  })
 
-  useEffect(() => {
-    const setUser = async () => {
-      if (login) {
-        const res: any = await signInWithEmailAndPassword(
-          completedForm.email,
-          completedForm.password
-        )
-        if (res) {
-          authAPI.setAccessTokenAPI(res)
-          history.push('/sounter')
-        }
-      } else {
-        const res: any = await registerWithEmailAndPassword(
-          completedForm.name,
-          completedForm.email,
-          completedForm.password
-        )
-        if (res) {
-          console.log('res-registerWithEmailAndPassword', res)
-        }
+  const setUser = async () => {
+    if (login) {
+      const res: any = await signInWithEmailAndPassword(
+        formData.email,
+        formData.password
+      )
+      if (res) {
+        authAPI.setAccessTokenAPI(res)
+        history.push('/sounter')
       }
+    } else {
+      await registerWithEmailAndPassword(
+        formData.name,
+        formData.email,
+        formData.password
+      )
     }
-    setUser()
-  }, [completedForm])
+  }
 
   const onChange = (evt: any) => {
     const { value, name } = evt.target
     setFormData((prev: any) => ({ ...prev, [name]: value }))
   }
+
   const onFinish = (values: any) => {
-    // const { name, email, password } = values
-    setCompletedForm(formData)
+    setUser()
+    setLogin(true)
+    form.setFieldsValue({
+      name: '',
+      email: '',
+      password: '',
+    })
   }
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
   }
+
   return (
     <div className={styles.container}>
       <a className={styles.title} href="/home">
         Sounter <p className={styles.subtitle}> create own routes</p>
       </a>
       <div className={styles.formContainer}>
-        <button
-          className={styles.buttonsChange}
-          type="button"
-          onClick={() => setLogin(false)}
-        >
-          Registration
-        </button>
-        <button
-          className={styles.buttonsChange}
-          type="button"
-          onClick={() => setLogin(true)}
-        >
-          Login
-        </button>
+        <div className={styles.buttonContainer}>
+          <button
+            className={styles.buttonsChange}
+            type="button"
+            onClick={() => setLogin(false)}
+          >
+            Registration
+          </button>
+          <button
+            className={styles.buttonsChange}
+            type="button"
+            onClick={() => setLogin(true)}
+          >
+            Login
+          </button>
+        </div>
         <Form
+          form={form}
           name="RegistrationLoginForm"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
@@ -117,6 +117,17 @@ const RegistrationPage = () => {
               onChange={onChange}
             />
           </Form.Item>
+          {login && (
+            <button
+              className={styles.buttonResetPassword}
+              type="button"
+              onClick={() => {
+                history.push('/registration/reset')
+              }}
+            >
+              Forgot Password
+            </button>
+          )}
 
           <Form.Item
             name="remember"

@@ -1,0 +1,31 @@
+.container {
+  width: 100%;
+  max-width: 1112px;
+  margin: 0 auto;
+  padding: 20px 15px;
+
+  .title {
+    display: block;
+    margin-bottom: 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: rgb(0, 110, 255);
+    .subtitle {
+      display: inline-block;
+      margin-bottom: 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: black;
+    }
+  }
+
+  .formContainer {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 100px;
+    padding: 40px 15px;
+    border: 1px solid rgb(10, 108, 253);
+    border-radius: 7px;
+  }
+}

@@ -12,6 +12,9 @@ const RegistrationPage = lazy(
   () => import('containers/Public/RegistrationPage')
 )
 const PrintInputPage = lazy(() => import('containers/Public/PrintInputPage'))
+const ResetPassword = lazy(
+  () => import('containers/Public/RegistrationPage/ResetPassword')
+)
 
 const App = () => {
   return (
@@ -21,8 +24,13 @@ const App = () => {
           <Switch>
             <PrivateRoute exact path="/sounter" component={SaunterPage} />
             <Route exact path="/home" component={MainPage} />
-            <Route exact path="/registration" component={RegistrationPage} />
             <Route exact path="/print" component={PrintInputPage} />
+            <Route exact path="/registration" component={RegistrationPage} />
+            <Route
+              exact
+              path="/registration/:reset"
+              component={ResetPassword}
+            />
           </Switch>
         </Suspense>
       </Router>

@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+// import Notification from "utils/notify";
 
 let configKorySergey = {
   apiKey: process.env.REACT_APP_WEB_API_KEY,
@@ -26,6 +27,10 @@ const signInWithGoogle = async () => {
     const res = await auth.signInWithPopup(googleProvider)
     // console.log(res.credential)
     // console.log(res.user)
+    if (res) {
+      alert('You was successfully Login. ')
+      // Notification("loginSuccess")
+    }
     return res.credential
   } catch (err) {
     console.error(err)
@@ -35,7 +40,6 @@ const signInWithGoogle = async () => {
 const signInWithFacebook = async () => {
   try {
     const res = await auth.signInWithPopup(facebookProvider)
-    console.log(res)
     return res
   } catch (err) {
     console.error(err)
@@ -45,7 +49,9 @@ const signInWithFacebook = async () => {
 const signInWithEmailAndPassword = async (email, password) => {
   try {
     const res = await auth.signInWithEmailAndPassword(email, password)
-    // console.log(res)
+    if (res) {
+      alert('You was successfully Login. ')
+    }
     return res
   } catch (err) {
     console.error(err)
@@ -58,6 +64,9 @@ const logout = () => {
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await auth.createUserWithEmailAndPassword(email, password)
+    if (res) {
+      alert('You was successfully registered. Login please!!! ')
+    }
     const user = res.user
     await db.collection('users').add({
       uid: user.uid,
@@ -65,7 +74,15 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       authProvider: 'local',
       email,
     })
-    return res
+  } catch (err) {
+    console.error(err)
+    alert(err.message)
+  }
+}
+const sendPasswordResetEmail = async email => {
+  try {
+    const res = await auth.sendPasswordResetEmail(email)
+    alert('Password reset link sent! Check your email!')
   } catch (err) {
     console.error(err)
     alert(err.message)
@@ -79,4 +96,5 @@ export {
   signInWithFacebook,
   signInWithEmailAndPassword,
   registerWithEmailAndPassword,
+  sendPasswordResetEmail,
 }

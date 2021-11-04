@@ -254,7 +254,7 @@ const MapComponentMemo: React.FC<IMap> = observer(
               {marker && marker.length > 1 ? (
                 <DirectionsRenderer
                   options={{
-                    directions: response,
+                    directions: { ...response },
                     draggable: true,
                   }}
                 />
