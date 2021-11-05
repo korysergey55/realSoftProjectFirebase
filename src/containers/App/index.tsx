@@ -5,7 +5,7 @@ import store from 'stores'
 import history from 'utils/history'
 import PrivateRoute from 'components/PrivateRoute'
 import Loader from 'components/Loader'
-
+import { ToastContainer, toast } from 'react-toastify'
 const MainPage = lazy(() => import('containers/Public/MainPage'))
 const SaunterPage = lazy(() => import('containers/Public/SaunterPage'))
 const RegistrationPage = lazy(
@@ -34,6 +34,7 @@ const App = () => {
           </Switch>
         </Suspense>
       </Router>
+      <ToastContainer />
     </Provider>
   )
 }

@@ -1,5 +1,6 @@
 import firebase from 'firebase'
-// import Notification from "utils/notify";
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 let configKorySergey = {
   apiKey: process.env.REACT_APP_WEB_API_KEY,
@@ -28,13 +29,16 @@ const signInWithGoogle = async () => {
     // console.log(res.credential)
     // console.log(res.user)
     if (res) {
-      alert('You was successfully Login. ')
-      // Notification("loginSuccess")
+      toast.success('You was successfully Login!', {
+        theme: 'colored',
+      })
     }
     return res.credential
   } catch (err) {
     console.error(err)
-    alert(err.message)
+    toast.error(`${err.message}`, {
+      theme: 'colored',
+    })
   }
 }
 const signInWithFacebook = async () => {
@@ -43,29 +47,34 @@ const signInWithFacebook = async () => {
     return res
   } catch (err) {
     console.error(err)
-    alert(err.message)
+    toast.error(`${err.message}`, {
+      theme: 'colored',
+    })
   }
 }
 const signInWithEmailAndPassword = async (email, password) => {
   try {
     const res = await auth.signInWithEmailAndPassword(email, password)
     if (res) {
-      alert('You was successfully Login. ')
+      toast.success('You was successfully Login!', {
+        theme: 'colored',
+      })
     }
     return res
   } catch (err) {
     console.error(err)
-    alert(err.message)
+    toast.error(`${err.message}`, {
+      theme: 'colored',
+    })
   }
-}
-const logout = () => {
-  auth.signOut()
 }
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await auth.createUserWithEmailAndPassword(email, password)
     if (res) {
-      alert('You was successfully registered. Login please!!! ')
+      toast.success('You was successfully registered. Login please!', {
+        theme: 'colored',
+      })
     }
     const user = res.user
     await db.collection('users').add({
@@ -76,18 +85,30 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     })
   } catch (err) {
     console.error(err)
-    alert(err.message)
+    toast.error(`${err.message}`, {
+      theme: 'colored',
+    })
   }
 }
 const sendPasswordResetEmail = async email => {
   try {
     const res = await auth.sendPasswordResetEmail(email)
-    alert('Password reset link sent! Check your email!')
+    toast('Password reset link sent! Check your email!')
   } catch (err) {
     console.error(err)
-    alert(err.message)
+    toast.error(`${err.message}`, {
+      theme: 'colored',
+    })
   }
 }
+
+const logout = () => {
+  auth.signOut()
+  toast.success('signOut success!', {
+    theme: 'colored',
+  })
+}
+
 export {
   auth,
   db,
