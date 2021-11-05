@@ -27,7 +27,8 @@ const RegistrationPage = () => {
         formData.password
       )
       if (res) {
-        authAPI.setAccessTokenAPI(res)
+        authAPI.setAccessTokenAPI(true)
+        authAPI.setUserAPI(res.user)
         history.push('/sounter')
       }
     } else {

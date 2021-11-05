@@ -7,7 +7,7 @@ import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons'
-// import { toJS } from 'mobx'
+import { toJS } from 'mobx'
 
 const Header = observer(() => {
   const { authAPI } = useStore()
@@ -17,7 +17,8 @@ const Header = observer(() => {
     if (e.currentTarget.name === 'google') {
       const res: any = await signInWithGoogle()
       if (res) {
-        authAPI.setAccessTokenAPI(res.accessToken)
+        authAPI.setAccessTokenAPI(res.credential.accessToken)
+        authAPI.setUserAPI(res.user)
         history.push('/sounter')
       }
     }
@@ -33,6 +34,7 @@ const Header = observer(() => {
     logout()
     authAPI.setAccessTokenAPI(null)
   }
+
   return (
     <>
       <header className={styles.header}>

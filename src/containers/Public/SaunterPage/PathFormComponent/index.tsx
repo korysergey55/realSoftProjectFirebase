@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 import { Form, Input, Button, Row } from 'antd'
-import MapComponent from 'utils/MapComponent/index'
 import MapComponentMemo from 'components/MapComponentMemo'
+import { writeUserPathDatabase } from 'utils/Firebase'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkedAlt, faCheck } from '@fortawesome/free-solid-svg-icons'
@@ -13,7 +13,7 @@ const { v4: uuidv4 } = require('uuid')
 const maxLength = 160
 
 const PathFormComponent = observer(() => {
-  const { sounterStore } = useStore()
+  const { sounterStore, authAPI } = useStore()
   const { distance, userArrMarkers } = sounterStore
   const [inputValue, setInputValue] = useState<any>({
     title: '',
@@ -63,6 +63,9 @@ const PathFormComponent = observer(() => {
 
   const onFinish = () => {
     sounterStore.addUserPath(completedPath)
+    if (authAPI.user) {
+      writeUserPathDatabase(sounterStore.userPath, authAPI.user?.uid)
+    }
     getResetForm()
   }
 
@@ -87,7 +90,7 @@ const PathFormComponent = observer(() => {
             <Form.Item
               label="Title"
               className={styles.label}
-              // rules={[{ required: true, message: 'Please enter title' }]}
+              rules={[{ required: true, message: 'Please enter title' }]}
             ></Form.Item>
             <Input
               name="title"

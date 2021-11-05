@@ -191,7 +191,6 @@ const MapComponentMemo: React.FC<IMap> = observer(
     function onChange(value: any) {
       setTravelMode(value)
     }
-    console.log(travelMode)
 
     return (
       <div className={styles.container}>

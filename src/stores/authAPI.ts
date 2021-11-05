@@ -15,6 +15,7 @@ class AuthAPI {
   @observable accessToken: string = localStorage.getItem('accessToken')
     ? JSON.parse(localStorage.getItem('accessToken') as string)
     : null
+  @observable user: any = null
 
   constructor() {
     makeAutoObservable(this)
@@ -23,9 +24,12 @@ class AuthAPI {
     //   _ => console.log(toJS(this.accessToken))
     // )
   }
-  @action.bound setAccessTokenAPI(tokenData: any) {
+  @action setAccessTokenAPI(tokenData: any) {
     this.accessToken = tokenData
     localStorage.setItem('accessToken', JSON.stringify(tokenData))
+  }
+  @action setUserAPI(data: any) {
+    this.user = data
   }
 
   // @action.bound setAuthAPI(authData: any) {
@@ -33,7 +37,7 @@ class AuthAPI {
   // }
   // @action async fetchAuthGoogleAPI(authData: any) {
   //   const BASE_URL =
-  //     'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/'
+  //     'https://saunter-3a6ad-default-rtdb.firebaseio.com/'
   //   try {
   //     const response = await axios.post(`${BASE_URL}`, { ...authData })
   //     this.setAuthAPI(response)
@@ -43,7 +47,7 @@ class AuthAPI {
   // }
   // @action async fetchAuthFacebookAPI(authData: any) {
   //   const BASE_URL =
-  //     'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/'
+  //     'https://saunter-3a6ad-default-rtdb.firebaseio.com/'
   //   try {
   //     const response = await axios.post(`${BASE_URL}`, { ...authData })
   //     this.setAuthAPI(response)
@@ -54,7 +58,7 @@ class AuthAPI {
 
   // @action async fetchTokenAPI(tokenData: any) {
   //   const BASE_URL =
-  //     'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/'
+  //     'https://saunter-3a6ad-default-rtdb.firebaseio.com/'
   //   try {
   //     const response = await axios.post(`${BASE_URL}`, { ...tokenData })
   //     this.setAccessTokenAPI(response)

@@ -7,9 +7,10 @@ import MapComponentMemo from 'components/MapComponentMemo'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
+import { toJS } from 'mobx'
 
 const SounterComponent = observer(() => {
-  const { sounterStore } = useStore()
+  const { sounterStore, authAPI } = useStore()
   const { item, filteredUserPath } = sounterStore
 
   const addToFavorites = () => {

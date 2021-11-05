@@ -26,14 +26,12 @@ const facebookProvider = new firebase.auth.FacebookAuthProvider()
 const signInWithGoogle = async () => {
   try {
     const res = await auth.signInWithPopup(googleProvider)
-    // console.log(res.credential)
-    // console.log(res.user)
     if (res) {
       toast.success('You was successfully Login!', {
         theme: 'colored',
       })
     }
-    return res.credential
+    return res
   } catch (err) {
     console.error(err)
     toast.error(`${err.message}`, {
@@ -93,7 +91,9 @@ const registerWithEmailAndPassword = async (name, email, password) => {
 const sendPasswordResetEmail = async email => {
   try {
     const res = await auth.sendPasswordResetEmail(email)
-    toast('Password reset link sent! Check your email!')
+    toast('Password reset link sent! Check your email!', {
+      theme: 'colored',
+    })
   } catch (err) {
     console.error(err)
     toast.error(`${err.message}`, {
@@ -109,6 +109,13 @@ const logout = () => {
   })
 }
 
+const writeUserPathDatabase = (path, userId) => {
+  firebase
+    .database()
+    .ref('users/' + userId)
+    .set(path)
+}
+
 export {
   auth,
   db,
@@ -118,4 +125,5 @@ export {
   signInWithEmailAndPassword,
   registerWithEmailAndPassword,
   sendPasswordResetEmail,
+  writeUserPathDatabase,
 }
