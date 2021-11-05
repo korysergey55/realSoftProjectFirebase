@@ -30,6 +30,7 @@ const Header = observer(() => {
       }
     }
   }
+
   const logoutAuth = () => {
     logout()
     authAPI.setAccessTokenAPI(null)

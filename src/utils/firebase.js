@@ -1,6 +1,7 @@
 import firebase from 'firebase'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import sauntrStore from 'stores/saunter'
 
 let configKorySergey = {
   apiKey: process.env.REACT_APP_WEB_API_KEY,
@@ -114,6 +115,19 @@ const writeUserPathDatabase = (path, userId) => {
     .database()
     .ref('users/' + userId)
     .set(path)
+  toast.success('Path added to database!', {
+    theme: 'colored',
+  })
+}
+
+const reedUserPathDatabase = postId => {
+  const userPathRef = firebase.database().ref('users/' + postId)
+  userPathRef.on('value', snapshot => {
+    const data = snapshot.val()
+    if (data) {
+      sauntrStore.setUserPath(data)
+    }
+  })
 }
 
 export {
@@ -126,4 +140,5 @@ export {
   registerWithEmailAndPassword,
   sendPasswordResetEmail,
   writeUserPathDatabase,
+  reedUserPathDatabase,
 }

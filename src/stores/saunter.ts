@@ -22,10 +22,10 @@ class SounterStore {
 
   constructor() {
     makeAutoObservable(this)
-    reaction(
-      () => this.item,
-      _ => console.log(toJS(this.item))
-    )
+    // reaction(
+    //   () => this.item,
+    //   _ => console.log(toJS(this.item))
+    // )
   }
   @action setModal() {
     this.modal = !this.modal
