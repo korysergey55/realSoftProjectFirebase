@@ -1,6 +1,7 @@
 import React from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
+import { writeUserPathDatabase, remuveUserPathDatabase } from 'utils/Firebase'
 import Filter from '../Filter'
 import SounterList from '../SounterList'
 import MapComponentMemo from 'components/MapComponentMemo'
@@ -19,6 +20,14 @@ const SounterComponent = observer(() => {
   const removePath = (id: string) => {
     sounterStore.removeUserPath(id)
     sounterStore.setItem(null)
+    if (authAPI.user) {
+      writeUserPathDatabase(sounterStore.userPath, authAPI.user?.uid)
+    }
+    // if (authAPI.user) {
+    //   const userId = authAPI.user?.uid
+    //   const pathId = sounterStore.userPath.find(item => item.id === id)
+    //   remuveUserPathDatabase(pathId, userId)
+    // }
   }
   const convertorKm = (distance: number) => {
     const result = (distance / 1000).toFixed(1)

@@ -130,6 +130,16 @@ const reedUserPathDatabase = postId => {
   })
 }
 
+const remuveUserPathDatabase = (pathId, userId) => {
+  firebase
+    .database()
+    .ref('users/' + userId)
+    .remove(pathId)
+  toast.success('Path was remuved from database!', {
+    theme: 'colored',
+  })
+}
+
 export {
   auth,
   db,
@@ -141,4 +151,5 @@ export {
   sendPasswordResetEmail,
   writeUserPathDatabase,
   reedUserPathDatabase,
+  remuveUserPathDatabase,
 }
