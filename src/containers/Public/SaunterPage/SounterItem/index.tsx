@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
-import IList from 'models/index'
+import { IItem } from 'models/index'
 import styles from './styles.module.scss'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,9 +13,9 @@ import {
 // import { toJS } from 'mobx'
 
 interface ISouterProps {
-  item: IList
+  item: IItem
 }
-const SounterList: React.FC<ISouterProps> = observer(({ item }) => {
+const SounterItem: React.FC<ISouterProps> = observer(({ item }) => {
   const { sounterStore } = useStore()
   const { item: currentItem } = sounterStore
 
@@ -56,4 +56,4 @@ const SounterList: React.FC<ISouterProps> = observer(({ item }) => {
   )
 })
 
-export default SounterList
+export default SounterItem

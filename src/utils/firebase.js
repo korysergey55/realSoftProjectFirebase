@@ -130,6 +130,19 @@ const reedUserPathDatabase = postId => {
   })
 }
 
+const updateUserPathDatabase = (path, userId) => {
+  const newPathtKey = firebase
+    .database()
+    .ref()
+    .child('users/' + userId)
+    .push(path).key
+  firebase.database().ref().update(newPathtKey)
+
+  toast.success('Path added to database!', {
+    theme: 'colored',
+  })
+}
+
 const remuveUserPathDatabase = (pathId, userId) => {
   firebase
     .database()
@@ -150,6 +163,7 @@ export {
   registerWithEmailAndPassword,
   sendPasswordResetEmail,
   writeUserPathDatabase,
+  updateUserPathDatabase,
   reedUserPathDatabase,
   remuveUserPathDatabase,
 }

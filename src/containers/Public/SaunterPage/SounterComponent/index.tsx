@@ -3,12 +3,12 @@ import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 import { writeUserPathDatabase, remuveUserPathDatabase } from 'utils/Firebase'
 import Filter from '../Filter'
-import SounterList from '../SounterList'
+import SounterItem from '../SounterItem/index'
 import MapComponentMemo from 'components/MapComponentMemo'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
-import { toJS } from 'mobx'
+// import { toJS } from 'mobx'
 
 const SounterComponent = observer(() => {
   const { sounterStore, authAPI } = useStore()
@@ -21,7 +21,9 @@ const SounterComponent = observer(() => {
     sounterStore.removeUserPath(id)
     sounterStore.setItem(null)
     if (authAPI.user) {
-      writeUserPathDatabase(sounterStore.userPath, authAPI.user?.uid)
+      const allMobxPaths = sounterStore.userPath
+      const userId = authAPI.user?.uid
+      writeUserPathDatabase(allMobxPaths, userId)
     }
     // if (authAPI.user) {
     //   const userId = authAPI.user?.uid
@@ -39,9 +41,9 @@ const SounterComponent = observer(() => {
       <div className={styles.leftSide}>
         <Filter />
         <ul className={styles.list}>
-          {filteredUserPath.length > 0 ? (
+          {filteredUserPath.length !== 0 ? (
             filteredUserPath.map(item => (
-              <SounterList item={item} key={item.id} />
+              <SounterItem item={item} key={item.id} />
             ))
           ) : (
             <h2 className={styles.notPathYet}>Not Path yet!</h2>
@@ -66,14 +68,14 @@ const SounterComponent = observer(() => {
               type="button"
               onClick={addToFavorites}
             >
-              {!item.favorite ? 'Add to favorites' : 'Remuve from favorites'}
+              {!item.favorite ? 'Add to favorites' : 'remove from favorites'}
             </button>
             <button
               className={styles.buttonRemove}
               type="button"
               onClick={() => removePath(item.id)}
             >
-              Remove
+              remove
             </button>
           </>
         ) : (

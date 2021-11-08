@@ -1,3 +1,4 @@
+import { IPrint } from 'models/index'
 import {
   makeAutoObservable,
   observable,
@@ -8,9 +9,9 @@ import {
   // computed,
   // runInAction,
 } from 'mobx'
-
 class InputsStore {
-  @observable inputs: object[] = []
+  @observable inputs: IPrint[] = []
+  @observable inputsValues: any = []
 
   constructor() {
     makeAutoObservable(this)
@@ -19,8 +20,11 @@ class InputsStore {
     //   _ => console.log(toJS(this.inputs))
     // )
   }
-  @action setInputs(data: object[]) {
+  @action setInputs(data: IPrint[]) {
     this.inputs = data
+  }
+  @action setInputsValues(data: any) {
+    this.inputsValues = data
   }
 }
 

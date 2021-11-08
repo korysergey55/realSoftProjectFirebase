@@ -17,17 +17,15 @@ const Filter = observer(() => {
   }
 
   return (
-    <>
-      <Search
-        placeholder="Search..."
-        allowClear={true}
-        size="large"
-        className={styles.input}
-        name="filter"
-        value={filterValue}
-        onChange={onChange}
-      />
-    </>
+    <Search
+      placeholder="Search..."
+      allowClear={true}
+      size="large"
+      className={styles.input}
+      name="filter"
+      value={filterValue}
+      onChange={e => onChange(e)}
+    />
   )
 })
 

@@ -1,65 +1,53 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
+import { IPrint } from 'models/index'
+import Item from './Item'
 import styles from './styles.module.scss'
-
+// import { toJS } from 'mobx'
 const { v4: uuidv4 } = require('uuid')
 
 const PrintInputPage = observer(() => {
   const { inputsStore } = useStore()
-  const [inputs, setInputs] = useState<object[]>([])
-  const [inputsValues, setInputsValues] = useState<object[]>([])
+  const { inputs } = inputsStore
   const [inputsQantity, setInputsQantity] = useState<number>(0)
-  const [qantity, setQantity] = useState<number>(0)
 
-  const onChangeQantity = (evt: any) => {
+  const onChangeQantity = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = evt.target
-    setInputsQantity(value)
+    setInputsQantity(Number(value))
   }
 
-  const onChange = (evt: any) => {
-    const { value, name } = evt.target
-    setInputsValues((prev: any) => [
-      ...prev.filter((item: any) => !item[name]),
-      { [name]: value },
-    ])
-    inputsStore.setInputs(inputsValues)
-  }
-  const submitQantity = () => {
-    setQantity(inputsQantity)
-  }
-
-  const printInputs = useMemo(() => {
-    let inputArrey: object[] = []
-    for (let i = 0; i < qantity; i += 1) {
-      inputArrey.push({ value: i, id: uuidv4() })
+  const onSubmit = () => {
+    let inputArrey: IPrint[] = []
+    for (let i = 0; i < inputsQantity; i += 1) {
+      inputArrey.push({ id: uuidv4(), value: '' })
     }
-    setInputs(inputArrey)
-  }, [qantity])
+    inputsStore.setInputs(inputArrey)
+  }
 
+  const onChange = (value: string, index: number) => {
+    const arr = inputs
+    arr[index] = {
+      ...arr[index],
+      value,
+    }
+    inputsStore.setInputs(arr)
+  }
   return (
     <div className={styles.container}>
-      <button className={styles.button} type="button" onClick={submitQantity}>
+      <button className={styles.button} type="button" onClick={onSubmit}>
         PrintInput
       </button>
       <input
         className={styles.qantity}
         type="number"
         min="0"
-        onChange={onChangeQantity}
+        value={inputsQantity}
+        onChange={e => onChangeQantity(e)}
       />
-      {inputs &&
-        inputs.map((item: any, index: number) => (
-          <label className={styles.label} key={index}>
-            {index}
-            <input
-              className={styles.input}
-              name={item.id}
-              onChange={onChange}
-              key={index}
-            />
-          </label>
-        ))}
+      {inputs?.map((item, index: number) => (
+        <Item key={item.id} item={item} index={index} onChange={onChange} />
+      ))}
     </div>
   )
 })

@@ -4,10 +4,10 @@ import MapComponentMemo from 'components/MapComponentMemo'
 
 const MainPage = () => {
   return (
-    <>
+    <div>
       <Header />
       <MapComponentMemo currentPos={true} />
-    </>
+    </div>
   )
 }
 

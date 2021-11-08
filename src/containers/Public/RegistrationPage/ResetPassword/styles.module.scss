@@ -9,7 +9,13 @@
     margin-bottom: 0;
     font-size: 30px;
     font-weight: 700;
+    border: none;
+    background-color: transparent;
     color: rgb(0, 110, 255);
+
+    &:hover {
+      cursor: pointer;
+    }
     .subtitle {
       display: inline-block;
       margin-bottom: 0;

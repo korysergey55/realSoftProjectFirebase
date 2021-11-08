@@ -15,19 +15,17 @@ const ModalComponent: React.FC<any> = observer(({ visible, children }: any) => {
   }
 
   return (
-    <>
-      <Modal
-        title="Add new path"
-        className={styles.modal}
-        width="1110px"
-        visible={visible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        {children}
-      </Modal>
-    </>
+    <Modal
+      title="Add new path"
+      className={styles.modal}
+      width="1110px"
+      visible={visible}
+      onOk={handleOk}
+      onCancel={handleCancel}
+      footer={null}
+    >
+      {children}
+    </Modal>
   )
 })
 

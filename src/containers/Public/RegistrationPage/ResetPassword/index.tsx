@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router'
+import { paths } from 'utils/routePath'
 import { sendPasswordResetEmail } from 'utils/Firebase'
 import { Form, Input, Button } from 'antd'
 import styles from './styles.module.scss'
-import { toJS } from 'mobx'
-import { useHistory } from 'react-router'
+// import { toJS } from 'mobx'
 
 const ResetPassword = () => {
   const [form] = Form.useForm()
   const history = useHistory()
-  const [userEmail, setUserEmail] = useState()
+  const [userEmail, setUserEmail] = useState<string>('')
 
-  const onChange = (e: any) => {
-    setUserEmail(e.target.value)
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setUserEmail(value)
   }
   const onFinish = () => {
     resetPasswordResponce()
@@ -21,14 +23,18 @@ const ResetPassword = () => {
   }
   const resetPasswordResponce = () => {
     sendPasswordResetEmail(userEmail)
-    history.push('/home')
+    history.push(paths.home)
   }
 
   return (
     <div className={styles.container}>
-      <a className={styles.title} href="/home">
+      <button
+        className={styles.title}
+        type="button"
+        onClick={() => history.push(paths.home)}
+      >
         Sounter <p className={styles.subtitle}> create own routes</p>
-      </a>
+      </button>
       <div className={styles.formContainer}>
         <Form
           form={form}
@@ -48,7 +54,7 @@ const ResetPassword = () => {
               name="email"
               value={userEmail}
               placeholder="Enter email to reset password"
-              onChange={onChange}
+              onChange={e => onChange(e)}
             />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

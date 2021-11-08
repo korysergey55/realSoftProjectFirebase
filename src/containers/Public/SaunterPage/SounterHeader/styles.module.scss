@@ -6,16 +6,22 @@
   padding: 20px 15px;
   border-bottom: 2px solid grey;
 
-  .title {
-    display: inline-block;
-    margin-left: 30px;
-    margin-bottom: 0;
-    font-size: 30px;
-    font-weight: 700;
-    color: rgb(0, 110, 255);
+  .button {
+    border: none;
+    background-color: transparent;
 
     &:hover {
       cursor: pointer;
+    }
+    .title {
+      display: inline-block;
+      margin-left: 30px;
+      margin-bottom: 0;
+      font-size: 30px;
+      font-weight: 700;
+      border: none;
+      background-color: transparent;
+      color: rgb(0, 110, 255);
     }
   }
   .buttonAddPath {

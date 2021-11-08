@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useStore } from 'stores'
 import { useHistory } from 'react-router'
+import { paths } from 'utils/routePath'
 import {
   signInWithEmailAndPassword,
   registerWithEmailAndPassword,
@@ -9,12 +10,18 @@ import { Form, Input, Button, Checkbox } from 'antd'
 import styles from './styles.module.scss'
 // import { toJS } from 'mobx'
 
+interface IformData {
+  name?: string
+  email?: string
+  password?: string
+}
+
 const RegistrationPage = () => {
   const { authAPI } = useStore()
   const history = useHistory()
   const [form] = Form.useForm()
   const [login, setLogin] = useState<boolean>(false)
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<IformData>({
     name: '',
     email: '',
     password: '',
@@ -29,7 +36,7 @@ const RegistrationPage = () => {
       if (res) {
         authAPI.setAccessTokenAPI(true)
         authAPI.setUserAPI(res.user)
-        history.push('/sounter')
+        history.push(paths.sounter)
       }
     } else {
       await registerWithEmailAndPassword(
@@ -40,12 +47,12 @@ const RegistrationPage = () => {
     }
   }
 
-  const onChange = (evt: any) => {
+  const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = evt.target
     setFormData((prev: any) => ({ ...prev, [name]: value }))
   }
 
-  const onFinish = (values: any) => {
+  const onFinish = () => {
     setUser()
     setLogin(true)
     form.setFieldsValue({
@@ -60,9 +67,13 @@ const RegistrationPage = () => {
 
   return (
     <div className={styles.container}>
-      <a className={styles.title} href="/home">
+      <button
+        className={styles.title}
+        type="button"
+        onClick={() => history.push(paths.home)}
+      >
         Sounter <p className={styles.subtitle}> create own routes</p>
-      </a>
+      </button>
       <div className={styles.formContainer}>
         <div className={styles.buttonContainer}>
           <button
@@ -96,7 +107,11 @@ const RegistrationPage = () => {
               name="name"
               rules={[{ required: true, message: 'Please input your Name!' }]}
             >
-              <Input name="name" value={formData.name} onChange={onChange} />
+              <Input
+                name="name"
+                value={formData.name}
+                onChange={e => onChange(e)}
+              />
             </Form.Item>
           )}
           <Form.Item
@@ -123,7 +138,7 @@ const RegistrationPage = () => {
               className={styles.buttonResetPassword}
               type="button"
               onClick={() => {
-                history.push('/registration/reset')
+                history.push(paths.resetPassword)
               }}
             >
               Forgot Password
