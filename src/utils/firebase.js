@@ -131,12 +131,11 @@ const reedUserPathDatabase = postId => {
 }
 
 const updateUserPathDatabase = (path, userId) => {
-  const newPathtKey = firebase
-    .database()
-    .ref()
-    .child('users/' + userId)
-    .push(path).key
-  firebase.database().ref().update(newPathtKey)
+  const newPathtKey = firebase.database().ref().child('users/').push().key
+
+  let updates = {}
+  updates[`/users/${userId}/${newPathtKey}`] = path
+  firebase.database().ref().update(updates)
 
   toast.success('Path added to database!', {
     theme: 'colored',

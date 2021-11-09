@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 import { IPrint } from 'models/index'
-import Item from './Item'
 import styles from './styles.module.scss'
+import Item from 'containers/Public/PrintInputPage/PrintItem/index'
 // import { toJS } from 'mobx'
 const { v4: uuidv4 } = require('uuid')
 

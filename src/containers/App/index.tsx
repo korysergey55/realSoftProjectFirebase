@@ -12,7 +12,9 @@ const SaunterPage = lazy(() => import('containers/Public/SaunterPage'))
 const RegistrationPage = lazy(
   () => import('containers/Public/RegistrationPage')
 )
-const PrintInputPage = lazy(() => import('containers/Public/PrintInputPage'))
+const PrintInputPage = lazy(
+  () => import('containers/Public/PrintInputPage/PrintItem')
+)
 const ResetPassword = lazy(
   () => import('containers/Public/RegistrationPage/ResetPassword')
 )

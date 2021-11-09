@@ -40,6 +40,7 @@ class SounterStore {
     this.userArrMarkers = markerArr
   }
   @action setUserPath(data: any) {
+    console.log(data)
     this.filteredUserPath = [...data]
     this.userPath = [...data]
     localStorage.setItem('userPath', JSON.stringify(this.userPath))
