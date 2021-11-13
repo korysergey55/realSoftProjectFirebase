@@ -10,13 +10,7 @@ let configKorySergey = {
   projectId: process.env.REACT_APP_PROJECT_ID,
   OAuth: process.env.REACT_APP_OAUTH,
 }
-// let configRealSoft = {
-//   apiKey: 'AIzaSyDwpUrScZfWnJtvC1bA3j1iF14-ZE-ff-U',
-//   authDomain: 'realsoftproject-5d44c.firebaseapp.com',
-//   databaseURL: 'https://realsoftproject-5d44c-default-rtdb.firebaseio.com/',
-//   projectId: 'realsoftproject-5d44c',
-//   OAuth: 'https://realsoftproject-5d44c.firebaseapp.com/__/auth/handler',
-// }
+
 const app = firebase.initializeApp(configKorySergey)
 const auth = app.auth()
 const db = app.firestore()

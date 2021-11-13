@@ -3,5 +3,6 @@ export const paths = {
   home: '/home',
   print: '/print',
   registration: '/registration',
-  resetPassword: '/resetPassword',
+  resetPassword: '/reset',
+  map: '/map',
 }

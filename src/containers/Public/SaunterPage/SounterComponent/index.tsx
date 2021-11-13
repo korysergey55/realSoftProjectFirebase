@@ -1,7 +1,10 @@
 import React from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
-import { writeUserPathDatabase, remuveUserPathDatabase } from 'utils/Firebase'
+import {
+  writeUserPathDatabase,
+  remuveUserPathDatabase,
+} from 'utils/Firebase/Firebase'
 import Filter from '../Filter'
 import SounterItem from '../SounterItem/index'
 import MapComponentMemo from 'components/MapComponentMemo'

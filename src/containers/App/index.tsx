@@ -18,7 +18,7 @@ const PrintInputPage = lazy(
 const ResetPassword = lazy(
   () => import('containers/Public/RegistrationPage/ResetPassword')
 )
-
+const MapComponent = lazy(() => import('utils/MapComponent/index'))
 const App = () => {
   return (
     <Provider {...store}>
@@ -34,6 +34,7 @@ const App = () => {
               component={RegistrationPage}
             />
             <Route exact path={paths.resetPassword} component={ResetPassword} />
+            <Route exact path={paths.map} component={MapComponent} />
           </Switch>
         </Suspense>
       </Router>

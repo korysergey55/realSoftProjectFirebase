@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { observer } from 'mobx-react'
 import { useStore } from 'stores'
-import { reedUserPathDatabase } from 'utils/Firebase'
+import { reedUserPathDatabase } from 'utils/Firebase/Firebase'
 import SounterHeader from './SounterHeader'
 import SounterComponent from './SounterComponent'
 

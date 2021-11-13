@@ -23,16 +23,17 @@ interface IMap {
   button?: boolean
   click?: boolean
   currentPos?: boolean
+  mark?: boolean
 }
 const { Option } = Select
 
 const MapComponentMemo: React.FC<IMap> = observer(
-  ({ button = false, click = false, currentPos = false }) => {
+  ({ button = false, click = false, currentPos = false, mark = true }) => {
     const { sounterStore } = useStore()
     const { positions } = useGeoPosition()
     const [currentPosition, setCurrentPosition] = useState<any>(null)
-    const [map, setMap] = useState(null)
 
+    const [map, setMap] = useState(null)
     const [marker, setMarker] = useState<any>()
     const [distanceLength, setDistanceLength] = useState<number>(0)
     const [travelMode, setTravelMode] = useState<any>('WALKING')
@@ -219,7 +220,6 @@ const MapComponentMemo: React.FC<IMap> = observer(
             >
               <Option value="DRIVING">DRIVING</Option>
               <Option value="WALKING">WALKING</Option>
-              {/* <Option value="BICYCLING">BICYCLING</Option> */}
             </Select>
           </>
         )}
@@ -240,7 +240,7 @@ const MapComponentMemo: React.FC<IMap> = observer(
                   draggable={false}
                 ></Marker>
               )}
-              {destination && origin && (
+              {mark && destination && origin && (
                 <DirectionsService
                   options={directionsServiceOptions}
                   callback={directionsCallback}

@@ -3,7 +3,11 @@ import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router'
 import { paths } from 'utils/routePath'
-import { signInWithGoogle, signInWithFacebook, logout } from 'utils/Firebase'
+import {
+  signInWithGoogle,
+  signInWithFacebook,
+  logout,
+} from 'utils/Firebase/Firebase'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons'

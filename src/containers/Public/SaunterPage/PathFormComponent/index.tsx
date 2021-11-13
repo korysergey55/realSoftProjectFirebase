@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useStore } from 'stores'
 import { observer } from 'mobx-react'
 import { IInputValue, ICompletedPath } from 'models/index'
-import { writeUserPathDatabase, updateUserPathDatabase } from 'utils/Firebase'
+import {
+  writeUserPathDatabase,
+  updateUserPathDatabase,
+} from 'utils/Firebase/Firebase'
 import { Form, Input, Button, Row } from 'antd'
 import MapComponentMemo from 'components/MapComponentMemo'
 import styles from './styles.module.scss'

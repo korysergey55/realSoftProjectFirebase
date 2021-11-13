@@ -6,7 +6,7 @@ const MainPage = () => {
   return (
     <div>
       <Header />
-      <MapComponentMemo currentPos={true} />
+      <MapComponentMemo currentPos={false} mark={false} />
     </div>
   )
 }

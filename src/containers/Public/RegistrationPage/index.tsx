@@ -5,7 +5,7 @@ import { paths } from 'utils/routePath'
 import {
   signInWithEmailAndPassword,
   registerWithEmailAndPassword,
-} from 'utils/Firebase'
+} from 'utils/Firebase/Firebase'
 import { Form, Input, Button, Checkbox } from 'antd'
 import styles from './styles.module.scss'
 // import { toJS } from 'mobx'

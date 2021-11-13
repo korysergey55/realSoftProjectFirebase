@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import { paths } from 'utils/routePath'
-import { sendPasswordResetEmail } from 'utils/Firebase'
+import { sendPasswordResetEmail } from 'utils/Firebase/Firebase'
 import { Form, Input, Button } from 'antd'
 import styles from './styles.module.scss'
 // import { toJS } from 'mobx'
